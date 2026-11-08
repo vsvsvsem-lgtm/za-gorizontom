@@ -137,7 +137,7 @@ h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
   <div id="stage"></div>
   <div id="status"><i></i><span id="stxt">Подключаемся к камере…</span><button class="btn" id="retry" hidden>Повторить</button></div>
   <button class="btn" id="exitimm" aria-label="Выйти из полноэкранного режима">✕</button><div class="bar"><div class="r1"><button class="btn" id="back">← Назад</button><h2 id="ttl"></h2><button class="btn" id="fs" title="На весь экран, без интерфейса" aria-label="На весь экран">⛶</button></div><div class="r2"><button class="btn" id="amb">🔊 Природа</button><button class="btn" id="snd">🔇 Эфир</button><button class="btn" id="fav" aria-pressed="false">☆ Избранное</button><button class="btn" id="slp" title="Таймер сна">☾ Сон</button></div><div id="hint"></div></div>
-  <div class="foot"><div class="vars" id="vars"></div><details class="exts" id="exts" hidden><summary id="extsum"></summary><div id="extl"></div></details><div class="chips" id="chips"></div><span class="live" id="live" hidden>Прямой эфир</span><div id="src"></div><small>Не загрузилось? <a id="ext" target="_blank" rel="noopener">Открыть на сайте источника ↗</a></small></div>
+  <div class="foot"><div class="vars" id="vars"></div><div class="chips" id="chips"></div><span class="live" id="live" hidden>Прямой эфир</span><div id="src"></div><small>Не загрузилось? <a id="ext" target="_blank" rel="noopener">Открыть на сайте источника ↗</a></small></div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
 <script>if(!window.Hls)document.write('<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"><\/script>')</script>
@@ -161,26 +161,27 @@ var GOES='https://cdn.star.nesdis.noaa.gov/';
    id — стабильный идентификатор; x — страница источника; every — как часто обновляется кадр, сек; off:true — временно отключить камеру */
 var EL={
  mountains:{t:'Горы',shym:true,src:[
-   {id:'mt-grca',type:'img',url:NPS+'grcalarge.jpg',every:900,lon:-112,name:'Гранд-Каньон',s:'National Park Service — Гранд-Каньон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'mt-grte',type:'img',url:NPS+'grtelarge.jpg',every:900,lon:-110,name:'Гранд-Титон',s:'National Park Service — Гранд-Титон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'mt-grca',dayonly:1,type:'img',url:NPS+'grcalarge.jpg',every:900,lon:-112,name:'Гранд-Каньон',s:'National Park Service — Гранд-Каньон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'mt-grte',dayonly:1,type:'img',url:NPS+'grtelarge.jpg',every:900,lon:-110,name:'Гранд-Титон',s:'National Park Service — Гранд-Титон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'mt-adh',type:'hls',url:'https://edge13.vedge.infomaniak.com/livecast/ik:adhtv/manifest.m3u8',name:'Альп-д’Юэз',s:'Alpe d’Huez TV — курортное ТВ, Французские Альпы',x:'https://www.alpedhuez.com/'},
    {id:'mt-kil1',type:'img',url:KIL+'observatories/hvo/cams/V1cam/images/M.jpg',every:120,lon:-155,name:'Килауэа · кратер',s:'USGS Hawaiian Volcano Observatory — западная стенка кратера Халемаумау, вулкан Килауэа, Гавайи',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'},
    {id:'mt-kil3',type:'img',url:KIL+'cams/V3cam/images/M.jpg',every:120,lon:-155,name:'Килауэа · пар',s:'USGS HVO — южная часть кратера Халемаумау, Килауэа',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'},
    {id:'mt-kilw',type:'img',url:KIL+'observatories/hvo/cams/KWcam/images/M.jpg',every:120,lon:-155,name:'Килауэа · кальдера',s:'USGS HVO — вид на Халемаумау с западной кромки, Килауэа',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'}]},
  sea:{t:'Море',keep:true,src:[
-   {id:'sea-pore',type:'img',url:NPS+'porelarge.jpg',every:900,name:'Пойнт-Рейес',s:'National Park Service — побережье Пойнт-Рейес, Тихий океан',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'sea-sey',mode:'stream',type:'yt',vid:'Thtj8Ht7Z_c',name:'Сейшелы · океан',s:'Канал Luxury Island (не официальный) — пляж и волны, Сейшельские острова. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=Thtj8Ht7Z_c'},
+   {id:'sea-mald',mode:'stream',type:'yt',vid:'_BMi3usEwi8',name:'Мальдивы · океан',s:'Канал Luxury Island (не официальный) — пляж у InterContinental, Мальдивы. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=_BMi3usEwi8'},
+   {id:'sea-utop2',type:'yt',vid:'jzx_n25g3kA',name:'Подводный риф · Утопия',s:'Explore Oceans (Explore.org) — песчаный канал и риф, Утопия-Виллидж. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
+   {id:'sea-orca',type:'yt',vid:'hTOmWcmr2Tc',name:'Косатки · OrcaLab',s:'OrcaLab через Explore.org — наблюдательный пост за косатками, Канада. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
+   {id:'sea-utila',mode:'stream',type:'yt',vid:'8oIxInlbqOw',name:'Карибский риф · Утила',s:'Канал Mindtune Oasis (не официальный) — подводная камера, Утила, Гондурас. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=8oIxInlbqOw'},
+   {id:'sea-pore',dayonly:1,lon:-123,type:'img',url:NPS+'porelarge.jpg',every:900,name:'Пойнт-Рейес',s:'National Park Service — побережье Пойнт-Рейес, Тихий океан',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'sea-kelp',type:'yt',vid:'w3LjpFhySTg',name:'Лес ламинарии',s:'Monterey Bay Aquarium — подводный лес ламинарии, Калифорния. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-jelly',type:'yt',vid:'eQ_foBERmzA',name:'Медузы',s:'Monterey Bay Aquarium — аквариум с медузами. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-shark',type:'yt',vid:'tEtg5Kg3voQ',name:'Акулы',s:'Monterey Bay Aquarium — акулы и крупные рыбы. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
-   {id:'sea-otter',type:'yt',vid:'abbR-Ttd-cA',name:'Морские выдры',s:'Monterey Bay Aquarium — морские выдры. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-mreef',type:'yt',vid:'1VBPxAkaNDU',name:'Коралловый риф',s:'Monterey Bay Aquarium — коралловый риф в аквариуме. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-trop',type:'yt',vid:'DHUnz4dyb54',name:'Тропический риф',s:'Explore.org — тропический риф. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
    {id:'sea-utopia',type:'yt',vid:'1zcIUk66HX4',name:'Риф Утопия-Виллидж',s:'Explore Oceans — подводная камера над рифом у острова Утила, Гондурас. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
    {id:'sea-cityc',type:'yt',vid:'7i8ARjIeM2k',name:'Коралловый город · Майами',s:'Coral Morphologic — подводная камера в Майами, Флорида. Живое видео (YouTube)',x:'https://www.coralcitycamera.com/'},
-   {id:'sea-peng1',type:'yt',vid:'KlVMg-8SIlw',name:'Пингвины под водой',s:'Aquarium of the Pacific через Explore.org — пингвины под водой, Лонг-Бич, США. Живое видео (YouTube)',x:'https://explore.org/livecams/aquarium-of-the-pacific'},
-   {id:'sea-peng2',type:'yt',vid:'GSxpCbXsvtI',name:'Пляж пингвинов',s:'Aquarium of the Pacific через Explore.org — «пляж» пингвинов, Лонг-Бич, США. Живое видео (YouTube)',x:'https://explore.org/livecams/aquarium-of-the-pacific'},
    {id:'sea-open',type:'yt',vid:'n_GpVsz4nHU',name:'Открытое море · Монтерей',s:'Monterey Bay Aquarium — главный аквариум с тунцами, акулами, черепахами, Калифорния. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
-   {id:'sea-crab',type:'yt',vid:'dzmJXWmA2EM',name:'Краб-паук · Монтерей',s:'Monterey Bay Aquarium — гигантские крабы-пауки, Калифорния. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-cowl',type:'img',url:USGS+'dreaminn/latest/c2_snap.jpg',every:600,name:'Санта-Крус',s:'USGS CoastCam — скалы и прибой, Санта-Крус, Калифорния, Тихий океан',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-suns',type:'img',url:USGS+'sunset/latest/c1_snap.jpg',every:600,name:'Сансет-Бич',s:'USGS CoastCam — океанский прибой, Уотсонвилл, Калифорния',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-nuvk',type:'img',url:USGS+'nuvuk/latest/c1_snap.jpg',every:600,name:'Северный Ледовитый',s:'USGS CoastCam — Нувук, Аляска, Северный Ледовитый океан',x:'https://coastcam.ucsd.edu/'},
@@ -189,11 +190,12 @@ var EL={
    {id:'sea-gaq',mode:'external',type:'external',name:'Georgia Aquarium',s:'Камеры Ocean Voyager: китовые акулы, скаты, косяки рыб. Эфир открывается на сайте аквариума',x:'https://www.georgiaaquarium.org/webcam/'},
    {id:'sea-eilat',mode:'external',type:'external',name:'Коралловый риф · Эйлат',s:'Живая камера рифа Красного моря, Эйлат, Израиль. Эфир открывается на сайте проекта',x:'https://www.coralreefs.org.il/en/live-stream'}]},
  forest:{t:'Лес',src:[
-   {id:'fo-shen',type:'img',url:NPS+'shenlarge.jpg',every:900,lon:-78,name:'Шенандоа',s:'National Park Service — леса Голубого хребта, Шенандоа',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-grsm',type:'img',url:NPS+'grsmlarge.jpg',every:900,lon:-83,name:'Смоки-Маунтинс',s:'National Park Service — Грейт-Смоки-Маунтинс',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-seki',type:'img',url:NPS+'sekilarge.jpg',every:900,lon:-119,name:'Секвойя',s:'National Park Service — секвойные леса Сьерра-Невады',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-yose',type:'img',url:NPS+'yoselarge.jpg',every:900,lon:-120,name:'Йосемити',s:'National Park Service — Йосемити',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-mora',type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'},
+   {id:'fo-wild',type:'yt',vid:'F0GOOP82094',name:'Дикая природа · лес',s:'Канал Nature Live Camera (Morten Hilmer, не официальный) — лесная камера 24/7. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=F0GOOP82094'},
+   {id:'fo-shen',dayonly:1,type:'img',url:NPS+'shenlarge.jpg',every:900,lon:-78,name:'Шенандоа',s:'National Park Service — леса Голубого хребта, Шенандоа',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-grsm',dayonly:1,type:'img',url:NPS+'grsmlarge.jpg',every:900,lon:-83,name:'Смоки-Маунтинс',s:'National Park Service — Грейт-Смоки-Маунтинс',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-seki',dayonly:1,type:'img',url:NPS+'sekilarge.jpg',every:900,lon:-119,name:'Секвойя',s:'National Park Service — секвойные леса Сьерра-Невады',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-yose',dayonly:1,type:'img',url:NPS+'yoselarge.jpg',every:900,lon:-120,name:'Йосемити',s:'National Park Service — Йосемити',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-mora',dayonly:1,type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'},
    {id:'fo-eagle',last:1,type:'yt',vid:'B4-L2nfGcuE',name:'Орлы · Биг-Бер',s:'FOBBV CAM — гнездо белоголовых орланов, Биг-Бер, Калифорния. Живое видео (YouTube)',x:'https://www.friendsofbigbearvalley.org/',lon:-117},
    {id:'fo-beagle',last:1,type:'yt',vid:'_xhLV-TJpd8',name:'Чёрные орлы · ЮАР',s:'Explore.org / Africam — гнездо чёрных орлов, Южная Африка. Живое видео (YouTube)',x:'https://explore.org/livecams/african-wildlife',lon:25},
    {id:'fo-oka',last:1,type:'yt',vid:'JMMoRwYo5kE',name:'Водопой · Этоша',s:'Namibia Wildlife Resorts — водопой Окаукуэджо, национальный парк Этоша, Намибия. Живое видео (YouTube)',x:'https://www.nwr.com.na/',lon:16},
@@ -207,6 +209,8 @@ var EL={
    {id:'au-arj',type:'yt',vid:'5A7JI6saAp4',name:'Арьеплог · Швеция',s:'Канал Planet Fast Forward — озеро Хорнаван, Лапландия, Швеция (неофициальный канал). Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=5A7JI6saAp4',lon:18},
    {id:'au-skar',type:'yt',vid:'iMqrD-HBDGo',name:'Скарсвог · Норвегия',s:'Skarsvåg bygdelag — деревня на севере Норвегии, сияние видно в ясную ночь. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=iMqrD-HBDGo',lon:25}]},
  space:{t:'Космос',src:[
+   {id:'sp-dt1',mode:'stream',type:'yt',vid:'I3sa2kiEpkA',name:'Земля из космоса · МКС',s:'Канал Dream Trips (не официальный) — виды с МКС, ночная сторона Земли. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=I3sa2kiEpkA'},
+   {id:'sp-dt2',mode:'stream',type:'yt',vid:'4QJEibrt9B8',name:'МКС · Земля live 24/7',s:'Канал Dream Trips (не официальный) — Земля с борта МКС. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=4QJEibrt9B8'},
    {id:'sp-iss',type:'yt',vid:'ROboUHfPUrU',name:'МКС · NASA HD',s:'NASA — официальный прямой эфир: вид Земли с Международной космической станции в высоком разрешении. Иногда идёт заставка при потере связи (YouTube)',x:'https://www.nasa.gov/live/'},
    {id:'sp-sen',type:'hls',mode:'video',url:'https://linear-1224.frequency.stream/dist/lg-uk/1224/hls/master/playlist.m3u8',name:'МКС · Земля live',s:'Sen — Space Live: прямой эфир с камер на МКС и спутниках. Сторонний бесплатный канал Sen, не официальный эфир NASA',x:'https://www.sen.com/'},
    {id:'sp-g19',type:'img',mode:'data',url:GOES+'GOES19/ABI/FD/GEOCOLOR/1808x1808.jpg',every:600,name:'Земля · GOES-19',s:'NOAA — спутник GOES-19 (36 000 км над Атлантикой). Снимок со спутника, обновляется раз в 10 минут',x:'https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G19',
@@ -250,7 +254,9 @@ function resolve(k){
     if(!e.keep)rest.sort(function(a,b){
       function score(o){if(o.x.last)return 2;if(o.x.lon===undefined)return 0;var d=isDay(o.x.lon);return (e.night?!d:d)?0:1}
       return score(a)-score(b)||a.i-b.i});
-    return sh.concat(rest.map(function(o){return o.x}).filter(function(x){return x.mode!=='external'&&!(x.type==='yt'&&location.protocol==='file:')}));
+    var all=rest.map(function(o){return o.x}).filter(function(x){return x.mode!=='external'&&!(x.type==='yt'&&location.protocol==='file:')});
+    var lit=all.filter(function(x){return !(x.dayonly&&x.lon!==undefined&&!isDay(x.lon))});
+    return sh.concat(lit.length?lit:all);
   });
 }
 var home=document.getElementById('home'),view=document.getElementById('view'),stage=document.getElementById('stage'),
@@ -271,7 +277,7 @@ function failAll(msg){teardown();setStatus(msg,false);retryBtn.hidden=false}
 retryBtn.addEventListener('click',function(){why=[];play(0)});
 function hhmm(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
 function everyText(n){return n>=60?'раз в '+Math.round(n/60)+' мин':'каждые '+n+' с'}
-var MODE={video:'LIVE VIDEO',image:'LIVE IMAGE',data:'DATA / MODEL',external:'EXTERNAL LIVE'};
+var MODE={video:'LIVE VIDEO',image:'LIVE IMAGE',data:'DATA / MODEL',external:'EXTERNAL LIVE',stream:'ВИДЕОПОТОК'};
 /* метка источника. Красная «прямой эфир» — только у настоящего видео; снимки и данные помечены спокойно */
 function playing(e,extra,stale){
   clearTimeout(watchdog);st.classList.add('hide');live.hidden=false;
@@ -293,14 +299,7 @@ function next(my,reason){
 }
 function curUrl(e){return e.variants?e.variants[e.vi].url:e.url}
 function curEvery(e){return (e.variants&&e.variants[e.vi].every)||e.every}
-function renderExt(k){
-  var ex=externals(k),box=document.getElementById('exts'),lst=document.getElementById('extl');
-  lst.innerHTML='';box.open=false;box.hidden=!ex.length;
-  view.classList.toggle('hasext',!!ex.length);
-  if(!ex.length)return;
-  document.getElementById('extsum').textContent='Эфиры на сайтах источников ('+ex.length+')';
-  ex.forEach(function(e){var a=document.createElement('a');a.href=e.x;a.target='_blank';a.rel='noopener';a.textContent=e.name+' ↗';a.title=e.s;lst.appendChild(a)});
-}
+function renderExt(k){}
 function renderVars(e){
   var box=document.getElementById('vars');box.innerHTML='';
   view.classList.toggle('hasvars',!!(e&&e.variants));
@@ -430,7 +429,7 @@ function open(k,want){
   view.classList.toggle('hint',k==='aurora');if(k==='aurora')updateHint();
   setImm(false);wakeOn();
   document.getElementById('ttl').textContent=e.t;
-  document.getElementById('src').textContent='';chips.innerHTML='';renderVars(null);document.getElementById('exts').hidden=true;view.classList.remove('hasext');teardown();
+  document.getElementById('src').textContent='';chips.innerHTML='';renderVars(null);teardown();
   liveMuted=true;snd.textContent='🔇 Эфир';
   amb.textContent=ambOn?'🔊 Природа':'🔇 Природа';
   startAmb(k);
