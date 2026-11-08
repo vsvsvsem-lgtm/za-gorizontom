@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>За горизонтом</title>
+<meta name="theme-color" content="#07090f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="За горизонтом">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap">
+<style>
+:root{--bg:#07090f;--fg:#f4f6fa;--mut:#8b94a7;--glow:#9ad0ff;--serif:"Cormorant Garamond",Georgia,"Times New Roman",serif;--sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07090f;--fg:#f4f6fa}}
+:root[data-theme="dark"]{--bg:#07090f;--fg:#f4f6fa}
+html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
+*{box-sizing:border-box;margin:0}
+body{height:100%;background:var(--bg);color:var(--fg);font-family:var(--sans);overflow-x:hidden;transition:background .8s}
+body[data-el=mountains]{--glow:#9ad0ff;--bg:#0a1626}
+body[data-el=sea]{--glow:#6fe0d2;--bg:#07242a}
+body[data-el=forest]{--glow:#8fe3a0;--bg:#08170f}
+body[data-el=aurora]{--glow:#7dffb5;--bg:#040d1a}
+body[data-el=space]{--glow:#b9a4ff;--bg:#0a0614}
+#home{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:32px 16px;background:radial-gradient(ellipse at 50% 0%,#16213a 0%,var(--bg) 60%);transition:opacity .6s,transform .6s}
+.brand{font:500 13px var(--sans);letter-spacing:.32em;text-transform:uppercase;color:var(--mut)}
+h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
+.sub{color:var(--mut);font-weight:300;text-align:center}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;width:100%;max-width:1000px}
+.card{position:relative;overflow:hidden;min-height:220px;border:1px solid #ffffff1a;border-radius:22px;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;text-align:left;color:var(--fg);cursor:pointer;font:inherit;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,border-color .45s}
+.card:hover,.card:focus-visible{transform:scale(1.04);border-color:var(--g);box-shadow:0 0 44px -6px var(--g);outline:none}
+.card:active{transform:scale(.99)}
+.card svg{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.card b{position:relative;font:500 30px var(--serif)}
+.card span{position:relative;color:#ffffffb3;font-weight:300;font-size:13px;margin-top:2px}
+.c-mountains{--g:#9ad0ff;background:linear-gradient(180deg,#14304f,#0a1626 75%)}
+.c-sea{--g:#6fe0d2;background:linear-gradient(180deg,#e9b872 0%,#2a8f8f 48%,#07242a 100%)}
+.c-forest{--g:#8fe3a0;background:linear-gradient(180deg,#1d5a3a,#08170f 80%)}
+.c-aurora{--g:#7dffb5;background:linear-gradient(180deg,#05182b,#0b3a3a 60%,#040d1a)}
+.c-space{--g:#b9a4ff;background:radial-gradient(circle at 70% 25%,#2a1a5e,#0a0614 65%)}
+.cta{font:400 20px var(--serif);font-style:italic;color:#d6dbe6}
+@media (max-width:520px){.card:last-child{grid-column:1/-1}}
+#view{--top:116px;--bot:130px;position:fixed;inset:0;background:#000;opacity:0;visibility:hidden;transition:opacity .7s,visibility .7s;z-index:5}
+#view.on{opacity:1;visibility:visible}
+#stage{position:absolute;inset:0;transform:scale(1.04);transition:transform 1.6s ease-out;overflow:hidden}
+#view.on #stage{transform:scale(1)}
+#stage video,#stage>div{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+#stage video{object-fit:cover}
+.still{position:absolute;inset:0;background:#000;overflow:hidden}
+.still .ly{position:absolute;inset:0;opacity:0;transition:opacity 1.5s}
+.still .ly.on{opacity:1}
+.still .bg{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(26px) brightness(.5) saturate(1.2)}
+.still .fg{position:absolute;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + var(--top));width:100%;height:calc(100% - var(--top) - var(--bot) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));object-fit:contain;transition:top .5s,height .5s}
+#status{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;display:flex;flex-direction:column;align-items:center;gap:12px;color:#c9cfdb;font-size:14px;text-align:center;max-width:min(520px,90vw);line-height:1.5;transition:opacity .5s}
+#status.hide{opacity:0;pointer-events:none}
+#status i{width:34px;height:34px;border-radius:50%;border:2px solid #ffffff26;border-top-color:var(--glow);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:#e5484d;border-radius:99px;padding:3px 9px;margin-bottom:8px}
+.live.calm{background:#ffffff1f;border:1px solid #ffffff33;color:#dfe6f2;letter-spacing:.06em;text-transform:none;font-size:11.5px}
+.live.calm:before{animation:none;background:var(--glow)}
+.live.stale{background:#7a5a1f;border-color:#c8963a}
+.vars{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+.vars:empty{display:none}
+.vars .btn{padding:4px 10px;font-size:11px;background:#ffffff12}
+.vars .btn[aria-pressed=true]{border-color:var(--glow);background:#ffffff33}
+#view.hasvars{--bot:166px}
+.exts{margin:0 auto 8px;max-width:520px;font-size:12px;color:#c9cfdb}
+.exts summary{cursor:pointer;list-style:none;display:inline-block;border:1px solid #ffffff2e;border-radius:99px;padding:4px 11px;background:#ffffff12}
+.exts summary::-webkit-details-marker{display:none}
+.exts[open] summary{border-color:var(--glow)}
+#extl{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;margin-top:8px}
+.exts a{color:var(--glow)}
+#view.hasext{--bot:156px}
+#view.hasvars.hasext{--bot:190px}
+#view.imm,#view.imm.hasvars,#view.imm.hasext,#view.imm.hasvars.hasext,#view.imm.hint{--top:0px;--bot:0px}
+.mode{display:inline-block;font-size:10px;letter-spacing:.14em;border:1px solid #ffffff33;border-radius:6px;padding:1px 6px;margin-right:6px;color:#c9cfdb;vertical-align:1px}
+.live:before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.chips{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.chips .btn{padding:6px 12px;font-size:12px}
+.chips .btn[aria-pressed=true]{border-color:var(--glow);background:#ffffff33;box-shadow:0 0 14px -4px var(--glow)}
+.bar{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 12px) 14px 22px;background:linear-gradient(#000c,#0000);z-index:2;transition:opacity .4s}
+.bar .r1,.bar .r2{display:flex;align-items:center;gap:8px}
+.bar .r2{flex-wrap:wrap}
+#view.hint{--top:172px}
+.bar .r2 .btn{padding:7px 9px;font-size:12px}
+#hint{display:none;font-size:12.5px;line-height:1.4;color:#d8e8e0;background:#ffffff18;border:1px solid #ffffff22;border-radius:14px;padding:7px 11px;backdrop-filter:blur(8px)}
+#view.hint #hint{display:block}
+#view.imm{--top:0px;--bot:0px}
+#view.imm .bar,#view.imm .foot{opacity:0;pointer-events:none}
+.bar,.foot{transition:opacity .4s}
+.btn.on{border-color:var(--glow);background:#ffffff33}
+#exitimm{position:fixed;z-index:3;right:calc(env(safe-area-inset-right,0px) + 12px);top:calc(env(safe-area-inset-top,0px) + 12px);opacity:0;pointer-events:none;padding:6px 11px}
+#view.imm #exitimm{opacity:.35;pointer-events:auto}
+#favs{width:100%;max-width:1000px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+#favs:empty{display:none}
+#favs .btn{font-size:13px;padding:8px 14px}
+#favs small{width:100%;text-align:center;color:var(--mut);font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+.bar h2{font:500 26px var(--serif);flex:1;min-width:0;text-shadow:0 0 18px var(--glow)}
+.btn{background:#ffffff1f;color:var(--fg);border:1px solid #ffffff2e;border-radius:99px;padding:8px 13px;font:400 13px var(--sans);backdrop-filter:blur(8px);cursor:pointer}
+.btn:hover{border-color:var(--glow);box-shadow:0 0 18px -4px var(--glow)}
+.foot{position:absolute;left:0;right:0;bottom:0;padding:26px 16px calc(env(safe-area-inset-bottom,0px) + 14px);text-align:center;background:linear-gradient(#0000,#000d);z-index:2;font-size:13px;line-height:1.5;color:#c9cfdb}
+.foot a{color:var(--glow)}
+.foot small{display:block;color:#98a0b3;margin-top:4px}
+</style>
+</head>
+<body>
+<main id="home">
+  <div class="brand">За горизонтом</div>
+  <h1>Выбери свою стихию!</h1>
+  <p class="sub">Утро начинается с вида</p>
+  <div class="cards">
+    <button class="card c-mountains" data-k="mountains">
+      <svg viewBox="0 0 200 240" preserveAspectRatio="xMidYMax slice"><path d="M0 170 60 80 95 130 135 60 200 150V240H0Z" fill="#cfe6ff" opacity=".85"/><path d="M0 200 70 130 120 180 170 120 200 160V240H0Z" fill="#0a1626"/></svg>
+      <b>Горы</b><span>Уйти в высоту</span>
+    </button>
+    <button class="card c-sea" data-k="sea">
+      <svg viewBox="0 0 200 240" preserveAspectRatio="xMidYMax slice"><circle cx="140" cy="92" r="26" fill="#ffe3a8"/><path d="M0 130q25-10 50 0t50 0 50 0 50 0V240H0Z" fill="#0b4a50" opacity=".7"/><path d="M0 165q25-10 50 0t50 0 50 0 50 0V240H0Z" fill="#07242a" opacity=".85"/></svg>
+      <b>Море</b><span>Услышать прибой</span>
+    </button>
+    <button class="card c-forest" data-k="forest">
+      <svg viewBox="0 0 200 240" preserveAspectRatio="xMidYMax slice"><g fill="#0c2a1a"><path d="M20 190 45 110 70 190Z"/><path d="M60 200 95 90 130 200Z"/><path d="M120 190 150 115 180 190Z"/></g><g fill="#061409"><path d="M-10 240 30 140 70 240Z"/><path d="M90 240 135 130 180 240Z"/><path d="M150 240 190 150 230 240Z"/></g><circle cx="150" cy="50" r="18" fill="#d8f5c8" opacity=".35"/></svg>
+      <b>Лес</b><span>Затеряться среди сосен</span>
+    </button>
+    <button class="card c-aurora" data-k="aurora">
+      <svg viewBox="0 0 200 240" preserveAspectRatio="xMidYMax slice"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7dffb5" stop-opacity="0"/><stop offset=".5" stop-color="#7dffb5" stop-opacity=".75"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></linearGradient></defs><path d="M-10 60Q40 10 90 50T210 40V150Q150 110 100 140T-10 130Z" fill="url(#ag)"/><path d="M-10 110Q50 70 100 100T210 90V170Q150 140 100 165T-10 160Z" fill="url(#ag)" opacity=".5"/><g fill="#fff"><circle cx="30" cy="30" r="1.2"/><circle cx="160" cy="20" r="1"/><circle cx="110" cy="45" r="1.3"/></g><path d="M0 240V205l40-12 45 15 50-18 65 14v36Z" fill="#02060d"/></svg>
+      <b>Северное сияние</b><span>Увидеть танец света</span>
+    </button>
+    <button class="card c-space" data-k="space">
+      <svg viewBox="0 0 200 240" preserveAspectRatio="xMidYMax slice"><g fill="#fff"><circle cx="30" cy="40" r="1.4"/><circle cx="80" cy="25" r="1"/><circle cx="120" cy="70" r="1.6"/><circle cx="170" cy="40" r="1.2"/><circle cx="55" cy="110" r="1"/><circle cx="150" cy="120" r="1.3"/><circle cx="105" cy="150" r="1"/></g><circle cx="100" cy="300" r="140" fill="#1f4fa8" opacity=".85"/><circle cx="100" cy="300" r="146" fill="none" stroke="#9ad0ff" stroke-opacity=".5" stroke-width="3"/></svg>
+      <b>Космос</b><span>Смотреть на Землю</span>
+    </button>
+  </div>
+  <div id="favs"></div>
+  <p class="cta">Одна кнопка — и ты уже там</p>
+</main>
+
+<section id="view" aria-live="polite">
+  <div id="stage"></div>
+  <div id="status"><i></i><span id="stxt">Подключаемся к камере…</span><button class="btn" id="retry" hidden>Повторить</button></div>
+  <button class="btn" id="exitimm" aria-label="Выйти из полноэкранного режима">✕</button><div class="bar"><div class="r1"><button class="btn" id="back">← Назад</button><h2 id="ttl"></h2><button class="btn" id="fs" title="На весь экран, без интерфейса" aria-label="На весь экран">⛶</button></div><div class="r2"><button class="btn" id="amb">🔊 Природа</button><button class="btn" id="snd">🔇 Эфир</button><button class="btn" id="fav" aria-pressed="false">☆ Избранное</button><button class="btn" id="slp" title="Таймер сна">☾ Сон</button></div><div id="hint"></div></div>
+  <div class="foot"><div class="vars" id="vars"></div><details class="exts" id="exts" hidden><summary id="extsum"></summary><div id="extl"></div></details><div class="chips" id="chips"></div><span class="live" id="live" hidden>Прямой эфир</span><div id="src"></div><small>Не загрузилось? <a id="ext" target="_blank" rel="noopener">Открыть на сайте источника ↗</a></small></div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
+<script>if(!window.Hls)document.write('<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"><\/script>')</script>
+<script>
+/* =====================================================================
+   Источники — только открытые камеры, без YouTube.
+   hls — живое видео (HLS), играет во встроенном плеере (hls.js / Safari)
+   img — «живой кадр»: научные и парковые камеры, кадр обновляется сам
+   lon — долгота места: камеры, где сейчас светло, показываются первыми
+         (для сияния — наоборот, где темно)
+   ===================================================================== */
+var NPS='https://www.nps.gov/featurecontent/ard/webcams/images/';
+var USGS='https://cmgp-coastcam.s3-us-west-2.amazonaws.com/cameras/';
+var SWPC='https://services.swpc.noaa.gov/images/animations/';
+var KIL='https://volcanoes.usgs.gov/';
+var NASA_LIVE='https://www.nasa.gov/live/';
+function himaTs(att){var d=new Date(Date.now()-(40+10*(att||0))*60000);d.setUTCMinutes(Math.floor(d.getUTCMinutes()/10)*10,0,0);return d}
+function himaUrl(att){var d=himaTs(att),p=function(n){return ('0'+n).slice(-2)};return 'https://himawari8-dl.nict.go.jp/himawari8/img/D531106/1d/550/'+d.getUTCFullYear()+'/'+p(d.getUTCMonth()+1)+'/'+p(d.getUTCDate())+'/'+p(d.getUTCHours())+p(d.getUTCMinutes())+'00_0_0.png'}
+var GOES='https://cdn.star.nesdis.noaa.gov/';
+/* mode: video (HLS) | image (обновляемый кадр) | data (модель / данные) | link (нельзя встроить — только ссылка на сайт источника)
+   id — стабильный идентификатор; x — страница источника; every — как часто обновляется кадр, сек; off:true — временно отключить камеру */
+var EL={
+ mountains:{t:'Горы',shym:true,src:[
+   {id:'mt-grca',type:'img',url:NPS+'grcalarge.jpg',every:900,lon:-112,name:'Гранд-Каньон',s:'National Park Service — Гранд-Каньон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'mt-grte',type:'img',url:NPS+'grtelarge.jpg',every:900,lon:-110,name:'Гранд-Титон',s:'National Park Service — Гранд-Титон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'mt-adh',type:'hls',url:'https://edge13.vedge.infomaniak.com/livecast/ik:adhtv/manifest.m3u8',name:'Альп-д’Юэз',s:'Alpe d’Huez TV — курортное ТВ, Французские Альпы',x:'https://www.alpedhuez.com/'},
+   {id:'mt-kil1',type:'img',url:KIL+'observatories/hvo/cams/V1cam/images/M.jpg',every:120,lon:-155,name:'Килауэа · кратер',s:'USGS Hawaiian Volcano Observatory — западная стенка кратера Халемаумау, вулкан Килауэа, Гавайи',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'},
+   {id:'mt-kil3',type:'img',url:KIL+'cams/V3cam/images/M.jpg',every:120,lon:-155,name:'Килауэа · пар',s:'USGS HVO — южная часть кратера Халемаумау, Килауэа',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'},
+   {id:'mt-kilw',type:'img',url:KIL+'observatories/hvo/cams/KWcam/images/M.jpg',every:120,lon:-155,name:'Килауэа · кальдера',s:'USGS HVO — вид на Халемаумау с западной кромки, Килауэа',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'}]},
+ sea:{t:'Море',keep:true,src:[
+   {id:'sea-pore',type:'img',url:NPS+'porelarge.jpg',every:900,name:'Пойнт-Рейес',s:'National Park Service — побережье Пойнт-Рейес, Тихий океан',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'sea-cowl',type:'img',url:USGS+'dreaminn/latest/c2_snap.jpg',every:600,name:'Санта-Крус',s:'USGS CoastCam — скалы и прибой, Санта-Крус, Калифорния, Тихий океан',x:'https://coastcam.ucsd.edu/'},
+   {id:'sea-suns',type:'img',url:USGS+'sunset/latest/c1_snap.jpg',every:600,name:'Сансет-Бич',s:'USGS CoastCam — океанский прибой, Уотсонвилл, Калифорния',x:'https://coastcam.ucsd.edu/'},
+   {id:'sea-nuvk',type:'img',url:USGS+'nuvuk/latest/c1_snap.jpg',every:600,name:'Северный Ледовитый',s:'USGS CoastCam — Нувук, Аляска, Северный Ледовитый океан',x:'https://coastcam.ucsd.edu/'},
+   {id:'sea-acad',type:'img',url:NPS+'acadlarge.jpg',every:900,name:'Акадия',s:'National Park Service — Акадия, побережье Атлантики',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'sea-3cat',type:'hls',url:'https://directes-tv-int.3catdirectes.cat/live-content/beauties-hls/master.m3u8',name:'Средиземное море',s:'3Cat «Càmeres del temps» — пляжи и побережье Каталонии',x:'https://www.3cat.cat/3cat/directes/beauties/'},
+   {id:'sea-mbay',mode:'external',type:'external',name:'Monterey Bay Aquarium',s:'Подводные камеры: медузы, выдры, лес ламинарии, океан. Эфир открывается на сайте аквариума',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
+   {id:'sea-gaq',mode:'external',type:'external',name:'Georgia Aquarium',s:'Камеры Ocean Voyager: китовые акулы, скаты, косяки рыб. Эфир открывается на сайте аквариума',x:'https://www.georgiaaquarium.org/webcam/'},
+   {id:'sea-eilat',mode:'external',type:'external',name:'Коралловый риф · Эйлат',s:'Живая камера рифа Красного моря, Эйлат, Израиль. Эфир открывается на сайте проекта',x:'https://www.coralreefs.org.il/en/live-stream'},
+   {id:'sea-explore',mode:'external',type:'external',name:'Explore.org · подводные камеры',s:'Подводные камеры и камеры морских животных. Эфир открывается на сайте Explore.org',x:'https://explore.org/livecams/currently-live'}]},
+ forest:{t:'Лес',src:[
+   {id:'fo-shen',type:'img',url:NPS+'shenlarge.jpg',every:900,lon:-78,name:'Шенандоа',s:'National Park Service — леса Голубого хребта, Шенандоа',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-grsm',type:'img',url:NPS+'grsmlarge.jpg',every:900,lon:-83,name:'Смоки-Маунтинс',s:'National Park Service — Грейт-Смоки-Маунтинс',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-seki',type:'img',url:NPS+'sekilarge.jpg',every:900,lon:-119,name:'Секвойя',s:'National Park Service — секвойные леса Сьерра-Невады',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-yose',type:'img',url:NPS+'yoselarge.jpg',every:900,lon:-120,name:'Йосемити',s:'National Park Service — Йосемити',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-mora',type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'}]},
+ aurora:{t:'Северное сияние',night:true,src:[
+   {id:'au-tromso',type:'img',url:'https://arcticcampers.no/aurora-forecast/webcam/upload/aurora-cam-tromso-norway.jpg',every:60,lon:19,name:'Тромсё · небо',s:'Arctic Campers — обычная камера на небо, Тромсё, Норвегия (сияние видно в ясную тёмную ночь)',x:'https://arcticcampers.no/aurora-forecast/webcam/'},
+   {id:'au-yk',type:'img',url:'https://auroramax.phys.ucalgary.ca/recent/recent_1080p.jpg',every:10,lon:-114,name:'Йеллоунайф',s:'AuroraMAX (Канадское космическое агентство, Univ. of Calgary) — Йеллоунайф, Канада. Камера работает в тёмное время суток',x:'https://ucalgary.ca/aurora/projects/auroramax'},
+   {id:'au-uit1',type:'img',url:'https://fox.phys.uit.no/ASC/Latest_ASC01.png',every:60,lon:19,name:'Норвегия · 1',s:'Университет Тромсё (UiT) — all-sky камера №1, Северная Норвегия',x:'https://fox.phys.uit.no/ASC/'},
+   {id:'au-uit2',type:'img',url:'https://fox.phys.uit.no/ASC/Latest_ASC02.png',every:60,lon:19,name:'Норвегия · 2',s:'Университет Тромсё (UiT) — all-sky камера №2, Северная Норвегия',x:'https://fox.phys.uit.no/ASC/'},
+   {id:'au-fmi',type:'img',url:'https://space.fmi.fi/MIRACLE/RWC/latest_MUO.jpg',every:60,lon:24,name:'Финляндия',s:'Финский метеоинститут (FMI) — all-sky камера, Муонио, Лапландия',x:'https://space.fmi.fi/MIRACLE/ASC/'},
+   {id:'au-ovn',mode:'data',type:'img',url:SWPC+'ovation/north/latest.jpg',every:600,last:1,name:'Овал сияния · Север',s:'NOAA SWPC — где сейчас светится северное сияние. Спутниковая модель, не камера с места',x:'https://www.swpc.noaa.gov/products/aurora-30-minute-forecast'},
+   {id:'au-ovs',mode:'data',type:'img',url:SWPC+'ovation/south/latest.jpg',every:600,last:1,name:'Овал сияния · Юг',s:'NOAA SWPC — южное сияние сейчас. Спутниковая модель, не камера с места',x:'https://www.swpc.noaa.gov/products/aurora-30-minute-forecast'}]},
+ space:{t:'Космос',src:[
+   {id:'sp-sen',type:'hls',mode:'video',url:'https://linear-1224.frequency.stream/dist/lg-uk/1224/hls/master/playlist.m3u8',name:'МКС · Земля live',s:'Sen — Space Live: прямой эфир с камер на МКС и спутниках. Сторонний бесплатный канал Sen, не официальный эфир NASA',x:'https://www.sen.com/'},
+   {id:'sp-g19',type:'img',mode:'data',url:GOES+'GOES19/ABI/FD/GEOCOLOR/1808x1808.jpg',every:600,name:'Земля · GOES-19',s:'NOAA — спутник GOES-19 (36 000 км над Атлантикой). Снимок со спутника, обновляется раз в 10 минут',x:'https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G19',
+     variants:[{n:'Цвет',url:GOES+'GOES19/ABI/FD/GEOCOLOR/1808x1808.jpg'},{n:'Воздушные массы',url:GOES+'GOES19/ABI/FD/AirMass/1808x1808.jpg'},{n:'Инфракрасный',url:GOES+'GOES19/ABI/FD/Sandwich/1808x1808.jpg'},{n:'Северная Америка',url:GOES+'GOES19/ABI/CONUS/GEOCOLOR/1250x750.jpg',every:300},{n:'Карибы',url:GOES+'GOES19/ABI/SECTOR/pr/GEOCOLOR/1200x1200.jpg',every:300}]},
+   {id:'sp-g18',type:'img',mode:'data',url:GOES+'GOES18/ABI/FD/GEOCOLOR/1808x1808.jpg',every:600,name:'Земля · GOES-18',s:'NOAA — спутник GOES-18 (над Тихим океаном). Снимок со спутника, обновляется раз в 10 минут',x:'https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G18',
+     variants:[{n:'Цвет',url:GOES+'GOES18/ABI/FD/GEOCOLOR/1808x1808.jpg'},{n:'Гавайи',url:GOES+'GOES18/ABI/SECTOR/hi/GEOCOLOR/1200x1200.jpg',every:300},{n:'Тихоокеанский СЗ',url:GOES+'GOES18/ABI/SECTOR/pnw/GEOCOLOR/1200x1200.jpg',every:300}]},
+   {id:'sp-him',type:'img',mode:'data',url:himaUrl,retry:3,every:600,name:'Азия · Himawari-9',s:'NICT / JMA — спутник Himawari-9: Азия, Австралия, Тихий океан. Снимок со спутника с задержкой около 40 минут, время кадра указано',x:'https://himawari.asia/',
+     stamp:function(att){var d=himaTs(att),p=function(n){return ('0'+n).slice(-2)};return 'кадр спутника '+p(d.getUTCHours())+':'+p(d.getUTCMinutes())+' UTC'}},
+   {id:'sp-nasa',mode:'external',type:'external',name:'NASA Live — МКС, запуски, выходы в космос',s:'NASA Live — официальные эфиры NASA. Поток нельзя встроить в приложение, смотрите на сайте NASA',x:NASA_LIVE},
+   {id:'sp-eo',mode:'external',type:'external',name:'NASA Earth Observatory',s:'NASA Earth Observatory — научные изображения и данные о Земле (не видео)',x:'https://earthobservatory.nasa.gov/'}]}
+};
+/* единая модель: у каждой записи есть id, mode и стабильные поля */
+Object.keys(EL).forEach(function(k){EL[k].src.forEach(function(e,i){
+  e.k=k;e.id=e.id||k+'-'+i;
+  e.mode=e.mode||(e.type==='hls'?'video':'image');
+  e.provider=e.provider||e.s.split(' — ')[0];e.checkedAt='2026-11-07';e.verified=e.mode!=='external';
+  if(e.variants&&!e.vi)e.vi=0;
+})});
+
+/* Камеры Шымбулака. Стартуем сразу с известных адресов (как в рабочей версии),
+   а официальный API курорта опрашиваем в фоне: если камеры поменяются, список обновится сам. */
+var SHYM=[['https://ipcam.kz/cam6/index.m3u8','Ледник Богдановича'],['https://ipcam.kz/cam5/index.m3u8','Средняя станция'],['https://ipcam.kz/cam1/index.m3u8','Базовая станция']];
+try{var saved=JSON.parse(localStorage.getItem('zg_shym')||'null');if(saved&&saved.length)SHYM=saved}catch(e){}
+function shymList(){return SHYM.map(function(c){return {id:'shym-'+c[1],mode:'video',type:'hls',url:c[0],name:c[1],s:'Shymbulak — '+c[1].toLowerCase()+', Казахстан',x:'https://shymbulak.com/live'}})}
+function refreshShymbulak(){
+  try{
+    fetch('https://api.shymbulak.com/content-service/live-videos?locale=ru').then(function(r){return r.json()}).then(function(list){
+      var out=(list||[]).filter(function(c){return c.videoUrl&&/\.m3u8/.test(c.videoUrl)&&c.title})
+        .sort(function(a,b){return /ледник/i.test(b.title)-/ледник/i.test(a.title)})
+        .map(function(c){return [c.videoUrl.replace(':443/','/'),c.title]});
+      if(out.length){SHYM=out;try{localStorage.setItem('zg_shym',JSON.stringify(out))}catch(e){}}
+    }).catch(function(){});
+  }catch(e){}
+}
+refreshShymbulak();
+/* светло ли сейчас в месте камеры (грубо, по солнечному времени) */
+function isDay(lon){var h=(new Date().getUTCHours()+new Date().getUTCMinutes()/60+lon/15+48)%24;return h>=7.5&&h<17}
+function externals(k){return EL[k].src.filter(function(x){return x.mode==='external'})}
+function resolve(k){
+  var e=EL[k];
+  return Promise.resolve(e.shym?shymList():[]).then(function(sh){
+    var rest=e.src.map(function(x,i){return {x:x,i:i}});
+    if(!e.keep)rest.sort(function(a,b){
+      function score(o){if(o.x.last)return 2;if(o.x.lon===undefined)return 0;var d=isDay(o.x.lon);return (e.night?!d:d)?0:1}
+      return score(a)-score(b)||a.i-b.i});
+    return sh.concat(rest.map(function(o){return o.x}).filter(function(x){return x.mode!=='external'}));
+  });
+}
+
+var home=document.getElementById('home'),view=document.getElementById('view'),stage=document.getElementById('stage'),
+ snd=document.getElementById('snd'),amb=document.getElementById('amb'),st=document.getElementById('status'),stxt=document.getElementById('stxt'),
+ live=document.getElementById('live'),retryBtn=document.getElementById('retry'),chips=document.getElementById('chips'),
+ liveMuted=true,ambOn=true,cur=null,list=[],idx=0,session=0,why=[],hls=null,video=null,watchdog=null,refresher=null;
+
+/* Окно предпросмотра (и часть WebView) запрещает странице грузить видео и картинки с других сайтов.
+   Обходить это нельзя — честно говорим и показываем ссылку на сайт источника. */
+var blockedNote=false;
+document.addEventListener('securitypolicyviolation',function(ev){
+  var dir=ev.effectiveDirective||ev.violatedDirective||'';
+  if(!/connect|img|media|default/.test(dir)||blockedNote||!view.classList.contains('on'))return;
+  blockedNote=true;teardown();
+  setStatus('Из этого окна не удаётся подключиться к камерам. Попробуйте открыть приложение в обычном браузере.',false);
+});
+function setStatus(t,spin){st.classList.remove('hide');stxt.textContent=t;st.querySelector('i').style.display=spin===false?'none':'';retryBtn.hidden=true}
+function failAll(msg){teardown();setStatus(msg,false);retryBtn.hidden=false}
+retryBtn.addEventListener('click',function(){why=[];play(0)});
+function hhmm(){var d=new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)}
+function everyText(n){return n>=60?'раз в '+Math.round(n/60)+' мин':'каждые '+n+' с'}
+var MODE={video:'LIVE VIDEO',image:'LIVE IMAGE',data:'DATA / MODEL',external:'EXTERNAL LIVE'};
+/* метка источника. Красная «прямой эфир» — только у настоящего видео; снимки и данные помечены спокойно */
+function playing(e,extra,stale){
+  clearTimeout(watchdog);st.classList.add('hide');live.hidden=false;
+  live.className='live'+(e.mode==='video'?'':' calm')+(stale?' stale':'');
+  live.textContent=e.mode==='video'?'LIVE VIDEO · Прямой эфир':(stale?'':MODE[e.mode]+' · ')+(extra||'')
+}
+function teardown(){
+  clearTimeout(watchdog);clearInterval(refresher);live.hidden=true;
+  if(hls){try{hls.destroy()}catch(e){}hls=null}
+  if(video){try{video.pause();video.removeAttribute('src');video.load()}catch(e){}video=null}
+  stage.innerHTML='';stage.style.background='';
+}
+function next(my,reason){
+  if(my!==session)return;
+  why.push('«'+list[idx].name+'»: '+(reason||'нет ответа 20 с'));
+  if(idx+1<list.length)play(idx+1,true);
+  else failAll('Сейчас ни одна камера не отвечает. '+why.join('; ')+'.')
+}
+function curUrl(e){return e.variants?e.variants[e.vi].url:e.url}
+function curEvery(e){return (e.variants&&e.variants[e.vi].every)||e.every}
+function renderExt(k){
+  var ex=externals(k),box=document.getElementById('exts'),lst=document.getElementById('extl');
+  lst.innerHTML='';box.open=false;box.hidden=!ex.length;
+  view.classList.toggle('hasext',!!ex.length);
+  if(!ex.length)return;
+  document.getElementById('extsum').textContent='Эфиры на сайтах источников ('+ex.length+')';
+  ex.forEach(function(e){var a=document.createElement('a');a.href=e.x;a.target='_blank';a.rel='noopener';a.textContent=e.name+' ↗';a.title=e.s;lst.appendChild(a)});
+}
+function renderVars(e){
+  var box=document.getElementById('vars');box.innerHTML='';
+  view.classList.toggle('hasvars',!!(e&&e.variants));
+  if(!e||!e.variants)return;
+  e.variants.forEach(function(v,j){var b=document.createElement('button');b.className='btn';b.textContent=v.n;b.setAttribute('aria-pressed',j===e.vi);
+    b.onclick=function(){e.vi=j;varsSel[e.id]=j;lsSet('zg_var',varsSel);why=[];play(idx)};box.appendChild(b)});
+}
+function play(i,auto){
+  teardown();var my=++session;idx=i;
+  var e=list[i];
+  if(!auto){lastCams[cur]=e.name;lsSet('zg_last',lastCams)}
+  updateFav();renderVars(e);
+  document.getElementById('src').innerHTML='';
+  var tag=document.createElement('span');tag.className='mode';tag.textContent=MODE[e.mode];
+  document.getElementById('src').appendChild(tag);document.getElementById('src').appendChild(document.createTextNode('Источник: '+e.s));
+  document.getElementById('ext').href=e.x;
+  [].forEach.call(chips.children,function(c,j){c.setAttribute('aria-pressed',j===i)});
+  snd.hidden=e.type!=='hls';
+  setStatus(auto?'Камера не отвечает, переключаемся на «'+e.name+'»…':'Подключаемся к камере «'+e.name+'»…');
+  watchdog=setTimeout(function(){next(my,'нет ответа 20 с')},20000);
+  if(e.type==='hls')playHLS(e,my);else playIMG(e,my);
+}
+function playHLS(e,my){
+  video=document.createElement('video');
+  video.muted=liveMuted;video.autoplay=true;video.playsInline=true;video.setAttribute('playsinline','');video.setAttribute('webkit-playsinline','');
+  stage.appendChild(video);
+  video.addEventListener('playing',function(){if(my===session)playing(e)});
+  var fail=function(r){next(my,r)};
+  if(window.Hls&&Hls.isSupported()){
+    hls=new Hls({liveSyncDurationCount:3,maxBufferLength:20,manifestLoadingMaxRetry:2,levelLoadingMaxRetry:2});
+    hls.on(Hls.Events.ERROR,function(_,d){
+      if(!d.fatal)return;
+      if(d.type===Hls.ErrorTypes.MEDIA_ERROR&&!hls._rec){hls._rec=1;try{hls.recoverMediaError();return}catch(x){}}
+      var code=d.response&&d.response.code;
+      fail(d.type===Hls.ErrorTypes.NETWORK_ERROR?(code?'сервер ответил '+code:'загрузка видео заблокирована или нет сети')+' ('+d.details+')':d.details)});
+    hls.loadSource(e.url);hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function(){var p=video.play();if(p&&p.catch)p.catch(function(){video.muted=true;video.play().catch(function(){})})});
+  }else if(video.canPlayType('application/vnd.apple.mpegurl')){   /* Safari / iOS */
+    video.src=e.url;video.addEventListener('error',function(){fail('плеер не смог открыть поток')});var p=video.play();if(p&&p.catch)p.catch(function(){});
+  }else{fail('браузер не поддерживает HLS-видео')}
+}
+/* обновляемый кадр: новый снимок грузится заранее и сменяет старый без мигания.
+   Если источник перестал обновляться — остаётся последний кадр с честной пометкой времени */
+function playIMG(e,my){
+  var box=document.createElement('div');box.className='still';stage.appendChild(box);
+  var first=true,att=0,lastOk=null,every=curEvery(e);
+  function badge(stale){
+    var stamp=e.stamp&&!stale?' · '+e.stamp(att):'';
+    if(stale)playing(e,'Последний кадр: '+lastOk+' — источник сейчас не обновляется',true);
+    else playing(e,'загружено '+lastOk+' · обновляется '+everyText(every)+stamp)
+  }
+  function load(){
+    var u=typeof e.url==='function'?e.url(att):curUrl(e);
+    var im=new Image();
+    im.onload=function(){
+      if(my!==session)return;
+      var ly=document.createElement('div');ly.className='ly';
+      var bg=document.createElement('img');bg.className='bg';bg.alt='';bg.src=im.src;
+      var fg=document.createElement('img');fg.className='fg';fg.alt=e.name;fg.src=im.src;
+      ly.appendChild(bg);ly.appendChild(fg);box.appendChild(ly);
+      requestAnimationFrame(function(){requestAnimationFrame(function(){ly.classList.add('on')})});
+      var old=box.querySelectorAll('.ly');for(var j=0;j<old.length-1;j++)(function(o){o.classList.remove('on');setTimeout(function(){o.remove()},1700)})(old[j]);
+      lastOk=hhmm();first=false;badge(false);
+    };
+    im.onerror=function(){
+      if(my!==session)return;
+      if(first){if(e.retry&&att<e.retry){att++;load();return}next(my,'изображение не загрузилось');return}
+      badge(true);   /* ошибка обновления: оставляем последний кадр и говорим об этом */
+    };
+    im.src=u+(u.indexOf('?')<0?'?':'&')+'t='+Date.now();
+  }
+  load();refresher=setInterval(load,Math.max(every,10)*1000);
+}
+function setMute(m){liveMuted=m;snd.textContent=m?'🔇 Эфир':'🔊 Эфир';if(video)video.muted=m}
+var ac,master,nodes=[],timer;
+function noise(){var b=ac.createBuffer(1,ac.sampleRate*3,ac.sampleRate),d=b.getChannelData(0),l=0;for(var i=0;i<d.length;i++){l=(l+0.02*(Math.random()*2-1))/1.02;d[i]=l*3.5}var s=ac.createBufferSource();s.buffer=b;s.loop=true;s.start();nodes.push(s);return s}
+function lfo(f,depth,param){var o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.value=depth;o.connect(g);g.connect(param);o.start();nodes.push(o)}
+function filt(type,f,q){var x=ac.createBiquadFilter();x.type=type;x.frequency.value=f;if(q)x.Q.value=q;return x}
+function gain(v){var g=ac.createGain();g.gain.value=v;return g}
+function chirp(){if(!ac||!master)return;var n=1+Math.floor(Math.random()*3),t=ac.currentTime,f0=2400+Math.random()*1600;for(var i=0;i<n;i++){var o=ac.createOscillator(),g=gain(0),s=t+i*0.14;o.frequency.setValueAtTime(f0,s);o.frequency.exponentialRampToValueAtTime(f0*(1.2+Math.random()*.4),s+.1);g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(.05,s+.03);g.gain.linearRampToValueAtTime(0,s+.12);o.connect(g);g.connect(master);o.start(s);o.stop(s+.15)}}
+function drone(freqs,v,lp){var f=filt('lowpass',lp);f.connect(master);freqs.forEach(function(fr){var o=ac.createOscillator(),g=gain(v);o.frequency.value=fr;o.connect(g);g.connect(f);o.start();nodes.push(o);lfo(.05+Math.random()*.06,4,o.detune)})}
+function startAmb(k){
+  stopAmb(true);if(!ambOn)return;
+  ac=ac||new(window.AudioContext||window.webkitAudioContext)();ac.resume();
+  master=gain(0);master.connect(ac.destination);master.gain.setTargetAtTime(.55,ac.currentTime,1.2);
+  var n,f,g;
+  if(k==='mountains'){n=noise();f=filt('bandpass',520,.6);g=gain(.7);n.connect(f);f.connect(g);g.connect(master);lfo(.07,220,f.frequency);lfo(.1,.3,g.gain)}
+  if(k==='sea'){n=noise();f=filt('lowpass',1100);g=gain(.55);n.connect(f);f.connect(g);g.connect(master);lfo(.1,.4,g.gain);lfo(.1,300,f.frequency)}
+  if(k==='forest'){n=noise();f=filt('lowpass',650);g=gain(.35);n.connect(f);f.connect(g);g.connect(master);lfo(.05,.15,g.gain);timer=setInterval(chirp,3200);chirp()}
+  if(k==='aurora'){drone([110,164.8,220.5,329.6],.07,900)}
+  if(k==='space'){drone([55,82.4,110.2],.14,420);n=noise();f=filt('lowpass',140);g=gain(.5);n.connect(f);f.connect(g);g.connect(master)}
+}
+function stopAmb(now){
+  clearInterval(timer);
+  if(!master)return;var m=master,ns=nodes;master=null;nodes=[];
+  m.gain.setTargetAtTime(0,ac.currentTime,now?.1:.4);
+  setTimeout(function(){ns.forEach(function(x){try{x.stop()}catch(e){}});m.disconnect()},now?500:1800);
+}
+function open(k,want){
+  var e=EL[k];cur=k;document.body.dataset.el=k;
+  view.classList.toggle('hint',k==='aurora');if(k==='aurora')updateHint();
+  setImm(false);wakeOn();
+  document.getElementById('ttl').textContent=e.t;
+  document.getElementById('src').textContent='';chips.innerHTML='';renderVars(null);document.getElementById('exts').hidden=true;view.classList.remove('hasext');teardown();
+  liveMuted=true;snd.textContent='🔇 Эфир';
+  amb.textContent=ambOn?'🔊 Природа':'🔇 Природа';
+  startAmb(k);
+  home.style.opacity=0;home.style.transform='scale(1.06)';
+  view.classList.add('on');
+  var my=++session;why=[];setStatus('Ищем работающие камеры…');
+  resolve(k).then(function(l){
+    if(my!==session||cur!==k)return;
+    list=l;renderExt(k);
+    l.forEach(function(c,i){var b=document.createElement('button');b.className='btn';b.textContent=c.name;b.onclick=function(){why=[];play(i)};chips.appendChild(b)});
+    var start=0,nm=want||lastCams[k];
+    if(nm)for(var j=0;j<l.length;j++)if(l[j].name===nm){start=j;break}
+    play(start);
+  });
+}
+function close(){
+  setImm(false);slpStop();wakeOff();renderFavs();
+  session++;view.classList.remove('on');home.style.opacity=1;home.style.transform='none';
+  delete document.body.dataset.el;stopAmb(false);
+  setTimeout(function(){if(!view.classList.contains('on'))teardown()},700);
+}
+document.querySelectorAll('.card').forEach(function(c){c.addEventListener('click',function(){open(c.dataset.k)})});
+document.getElementById('back').addEventListener('click',close);
+amb.addEventListener('click',function(){ambOn=!ambOn;amb.textContent=ambOn?'🔊 Природа':'🔇 Природа';if(ambOn)startAmb(cur);else stopAmb(false)});
+snd.addEventListener('click',function(){setMute(!liveMuted)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(view.classList.contains('imm'))setImm(false);else close()}});
+
+/* ---------- память: избранное и последняя камера ---------- */
+function lsGet(k,d){try{var v=JSON.parse(localStorage.getItem(k)||'null');return v==null?d:v}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+var FAV=lsGet('zg_fav',[]),lastCams=lsGet('zg_last',{}),varsSel=lsGet('zg_var',{});
+if(!varsSel||typeof varsSel!=='object')varsSel={};
+Object.keys(EL).forEach(function(k){EL[k].src.forEach(function(e){if(e.variants&&varsSel[e.id]!=null&&e.variants[varsSel[e.id]])e.vi=varsSel[e.id]})});
+if(!Array.isArray(FAV))FAV=[];if(typeof lastCams!=='object'||!lastCams)lastCams={};
+function favKey(){return cur&&list[idx]?cur+'|'+list[idx].name:''}
+function updateFav(){
+  var fb=document.getElementById('fav'),on=FAV.indexOf(favKey())>=0;
+  fb.textContent=on?'★ Избранное':'☆ Избранное';fb.setAttribute('aria-pressed',on);fb.classList.toggle('on',on);
+  for(var j=0;j<chips.children.length&&j<list.length;j++)chips.children[j].textContent=(FAV.indexOf(cur+'|'+list[j].name)>=0?'★ ':'')+list[j].name;
+}
+function renderFavs(){
+  var box=document.getElementById('favs');box.innerHTML='';
+  var ok=FAV.filter(function(f){var p=f.split('|');return EL[p[0]]});
+  if(!ok.length)return;
+  var h=document.createElement('small');h.textContent='Избранное';box.appendChild(h);
+  ok.forEach(function(f){var p=f.split('|'),nm=f.slice(p[0].length+1);
+    var b=document.createElement('button');b.className='btn';b.textContent='★ '+EL[p[0]].t+' · '+nm;
+    b.onclick=function(){open(p[0],nm)};box.appendChild(b)});
+}
+document.getElementById('fav').addEventListener('click',function(){
+  var k=favKey();if(!k)return;var i=FAV.indexOf(k);
+  if(i>=0)FAV.splice(i,1);else FAV.push(k);
+  lsSet('zg_fav',FAV);updateFav();
+});
+renderFavs();
+
+/* ---------- на весь экран / без интерфейса ---------- */
+function setImm(on){
+  view.classList.toggle('imm',!!on);
+  var d=document,de=d.documentElement;
+  try{
+    if(on){var f=de.requestFullscreen||de.webkitRequestFullscreen;if(f&&!d.fullscreenElement&&!d.webkitFullscreenElement){var p=f.call(de);if(p&&p.catch)p.catch(function(){})}}
+    else{var x=d.exitFullscreen||d.webkitExitFullscreen;if(x&&(d.fullscreenElement||d.webkitFullscreenElement)){var q=x.call(d);if(q&&q.catch)q.catch(function(){})}}
+  }catch(e){}
+}
+document.getElementById('fs').addEventListener('click',function(ev){ev.stopPropagation();setImm(true)});
+document.getElementById('exitimm').addEventListener('click',function(ev){ev.stopPropagation();setImm(false)});
+view.addEventListener('click',function(){if(view.classList.contains('imm'))setImm(false)});
+function fsChange(){if(!document.fullscreenElement&&!document.webkitFullscreenElement&&view.classList.contains('imm'))view.classList.remove('imm')}
+document.addEventListener('fullscreenchange',fsChange);document.addEventListener('webkitfullscreenchange',fsChange);
+
+/* ---------- таймер сна: звук плавно затихает, потом возврат на главную ---------- */
+var SLP=[0,15,30,60],slpI=0,slpEnd=0,slpT=null,slpBtn=document.getElementById('slp');
+function slpStop(){clearInterval(slpT);slpT=null;slpI=0;slpEnd=0;slpBtn.textContent='☾ Сон';slpBtn.classList.remove('on')}
+function slpTick(){
+  var left=Math.round((slpEnd-Date.now())/1000);
+  if(left<=0){var m=master;if(m&&ac)m.gain.setTargetAtTime(0,ac.currentTime,.3);close();return}
+  if(left<=12){if(master&&ac)master.gain.setTargetAtTime(0,ac.currentTime,3);if(video&&!video.muted)video.volume=Math.max(0,left/12)}
+  slpBtn.textContent='☾ '+(left>=60?Math.ceil(left/60)+' мин':left+' с');
+}
+slpBtn.addEventListener('click',function(){
+  slpI=(slpI+1)%SLP.length;clearInterval(slpT);
+  if(!SLP[slpI]){slpStop();return}
+  slpEnd=Date.now()+SLP[slpI]*60000;slpBtn.classList.add('on');slpTick();slpT=setInterval(slpTick,1000);
+});
+
+/* ---------- экран не гаснет, пока смотришь ---------- */
+var wl=null;
+function wakeOn(){try{if(navigator.wakeLock&&!wl)navigator.wakeLock.request('screen').then(function(l){wl=l;l.addEventListener('release',function(){wl=null})}).catch(function(){})}catch(e){}}
+function wakeOff(){try{if(wl){wl.release();wl=null}}catch(e){}}
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&view.classList.contains('on'))wakeOn()});
+
+/* ---------- сияние: где сейчас ночь и индекс активности Kp ---------- */
+var kpCache={t:0,v:null};
+function kpText(kp){
+  if(kp<2)return 'Kp '+kp+' — очень спокойно, сияние только у самого полярного круга';
+  if(kp<4)return 'Kp '+kp+' — спокойно, сияние видно на крайнем севере';
+  if(kp<5)return 'Kp '+kp+' — слабое возмущение, сияние выше 60° с. ш.';
+  if(kp<7)return 'Kp '+kp+' — магнитная буря: хороший шанс на яркое сияние';
+  return 'Kp '+kp+' — сильная буря: сияние может быть видно очень далеко на юг';
+}
+function updateHint(){
+  var h=document.getElementById('hint');
+  var dark=EL.aurora.src.filter(function(c){return c.lon!==undefined&&!isDay(c.lon)}).map(function(c){return c.name.replace(/ ·.*$/,'')});
+  var uniq=dark.filter(function(n,i){return dark.indexOf(n)===i});
+  var a=uniq.length?'🌙 Сейчас ночь: '+uniq.join(', '):'☀ Сейчас на всех камерах день — сияние видно в тёмное время суток';
+  h.textContent=a;
+  function show(kp){if(kp!=null&&!isNaN(kp))h.textContent=a+' · '+kpText(Math.round(kp*10)/10)}
+  if(kpCache.v!=null&&Date.now()-kpCache.t<600000){show(kpCache.v);return}
+  try{fetch('https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json').then(function(r){return r.json()}).then(function(j){
+    var last=j[j.length-1],kp=parseFloat(Array.isArray(last)?last[1]:last.Kp);
+    kpCache={t:Date.now(),v:kp};if(cur==='aurora')show(kp)}).catch(function(){})}catch(e){}
+}
+
+/* ---------- установка как приложения (нужен https-адрес) ---------- */
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+</script>
+</body>
+</html>
