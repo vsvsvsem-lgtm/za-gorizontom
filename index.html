@@ -161,19 +161,19 @@ var GOES='https://cdn.star.nesdis.noaa.gov/';
    id — стабильный идентификатор; x — страница источника; every — как часто обновляется кадр, сек; off:true — временно отключить камеру */
 var EL={
  mountains:{t:'Горы',shym:true,src:[
-   {id:'mt-grca',dayonly:1,type:'img',url:NPS+'grcalarge.jpg',every:900,lon:-112,name:'Гранд-Каньон',s:'National Park Service — Гранд-Каньон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'mt-grte',dayonly:1,type:'img',url:NPS+'grtelarge.jpg',every:900,lon:-110,name:'Гранд-Титон',s:'National Park Service — Гранд-Титон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'mt-grca',type:'img',url:NPS+'grcalarge.jpg',every:900,lon:-112,name:'Гранд-Каньон',s:'National Park Service — Гранд-Каньон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'mt-grte',type:'img',url:NPS+'grtelarge.jpg',every:900,lon:-110,name:'Гранд-Титон',s:'National Park Service — Гранд-Титон, США',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'mt-adh',type:'hls',url:'https://edge13.vedge.infomaniak.com/livecast/ik:adhtv/manifest.m3u8',name:'Альп-д’Юэз',s:'Alpe d’Huez TV — курортное ТВ, Французские Альпы',x:'https://www.alpedhuez.com/'},
    {id:'mt-kil1',type:'img',url:KIL+'observatories/hvo/cams/V1cam/images/M.jpg',every:120,lon:-155,name:'Килауэа · кратер',s:'USGS Hawaiian Volcano Observatory — западная стенка кратера Халемаумау, вулкан Килауэа, Гавайи',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'},
    {id:'mt-kil3',type:'img',url:KIL+'cams/V3cam/images/M.jpg',every:120,lon:-155,name:'Килауэа · пар',s:'USGS HVO — южная часть кратера Халемаумау, Килауэа',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'},
    {id:'mt-kilw',type:'img',url:KIL+'observatories/hvo/cams/KWcam/images/M.jpg',every:120,lon:-155,name:'Килауэа · кальдера',s:'USGS HVO — вид на Халемаумау с западной кромки, Килауэа',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'}]},
  sea:{t:'Море',keep:true,src:[
-   {id:'sea-sey',mode:'stream',type:'yt',vid:'Thtj8Ht7Z_c',name:'Сейшелы · океан',s:'Канал Luxury Island (не официальный) — пляж и волны, Сейшельские острова. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=Thtj8Ht7Z_c'},
-   {id:'sea-mald',mode:'stream',type:'yt',vid:'_BMi3usEwi8',name:'Мальдивы · океан',s:'Канал Luxury Island (не официальный) — пляж у InterContinental, Мальдивы. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=_BMi3usEwi8'},
+   {id:'sea-sey',ads:1,mode:'stream',type:'yt',vid:'Thtj8Ht7Z_c',name:'Сейшелы · океан',s:'Канал Luxury Island (не официальный) — пляж и волны, Сейшельские острова. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=Thtj8Ht7Z_c'},
+   {id:'sea-mald',ads:1,mode:'stream',type:'yt',vid:'_BMi3usEwi8',name:'Мальдивы · океан',s:'Канал Luxury Island (не официальный) — пляж у InterContinental, Мальдивы. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=_BMi3usEwi8'},
    {id:'sea-utop2',type:'yt',vid:'jzx_n25g3kA',name:'Подводный риф · Утопия',s:'Explore Oceans (Explore.org) — песчаный канал и риф, Утопия-Виллидж. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
    {id:'sea-orca',type:'yt',vid:'hTOmWcmr2Tc',name:'Косатки · OrcaLab',s:'OrcaLab через Explore.org — наблюдательный пост за косатками, Канада. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
-   {id:'sea-utila',mode:'stream',type:'yt',vid:'8oIxInlbqOw',name:'Карибский риф · Утила',s:'Канал Mindtune Oasis (не официальный) — подводная камера, Утила, Гондурас. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=8oIxInlbqOw'},
-   {id:'sea-pore',dayonly:1,lon:-123,type:'img',url:NPS+'porelarge.jpg',every:900,name:'Пойнт-Рейес',s:'National Park Service — побережье Пойнт-Рейес, Тихий океан',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'sea-utila',ads:1,mode:'stream',type:'yt',vid:'8oIxInlbqOw',name:'Карибский риф · Утила',s:'Канал Mindtune Oasis (не официальный) — подводная камера, Утила, Гондурас. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=8oIxInlbqOw'},
+   {id:'sea-pore',lon:-123,type:'img',url:NPS+'porelarge.jpg',every:900,name:'Пойнт-Рейес',s:'National Park Service — побережье Пойнт-Рейес, Тихий океан',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'sea-kelp',type:'yt',vid:'w3LjpFhySTg',name:'Лес ламинарии',s:'Monterey Bay Aquarium — подводный лес ламинарии, Калифорния. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-jelly',type:'yt',vid:'eQ_foBERmzA',name:'Медузы',s:'Monterey Bay Aquarium — аквариум с медузами. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-shark',type:'yt',vid:'tEtg5Kg3voQ',name:'Акулы',s:'Monterey Bay Aquarium — акулы и крупные рыбы. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
@@ -186,16 +186,16 @@ var EL={
    {id:'sea-suns',type:'img',url:USGS+'sunset/latest/c1_snap.jpg',every:600,name:'Сансет-Бич',s:'USGS CoastCam — океанский прибой, Уотсонвилл, Калифорния',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-nuvk',type:'img',url:USGS+'nuvuk/latest/c1_snap.jpg',every:600,name:'Северный Ледовитый',s:'USGS CoastCam — Нувук, Аляска, Северный Ледовитый океан',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-acad',type:'img',url:NPS+'acadlarge.jpg',every:900,name:'Акадия',s:'National Park Service — Акадия, побережье Атлантики',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'sea-3cat',type:'hls',url:'https://directes-tv-int.3catdirectes.cat/live-content/beauties-hls/master.m3u8',name:'Средиземное море',s:'3Cat «Càmeres del temps» — пляжи и побережье Каталонии',x:'https://www.3cat.cat/3cat/directes/beauties/'},
+   {id:'sea-3cat',tail:1,type:'hls',url:'https://directes-tv-int.3catdirectes.cat/live-content/beauties-hls/master.m3u8',name:'Средиземное море',s:'3Cat «Càmeres del temps» — пляжи и побережье Каталонии',x:'https://www.3cat.cat/3cat/directes/beauties/'},
    {id:'sea-gaq',mode:'external',type:'external',name:'Georgia Aquarium',s:'Камеры Ocean Voyager: китовые акулы, скаты, косяки рыб. Эфир открывается на сайте аквариума',x:'https://www.georgiaaquarium.org/webcam/'},
    {id:'sea-eilat',mode:'external',type:'external',name:'Коралловый риф · Эйлат',s:'Живая камера рифа Красного моря, Эйлат, Израиль. Эфир открывается на сайте проекта',x:'https://www.coralreefs.org.il/en/live-stream'}]},
  forest:{t:'Лес',src:[
-   {id:'fo-wild',type:'yt',vid:'F0GOOP82094',name:'Дикая природа · лес',s:'Канал Nature Live Camera (Morten Hilmer, не официальный) — лесная камера 24/7. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=F0GOOP82094'},
-   {id:'fo-shen',dayonly:1,type:'img',url:NPS+'shenlarge.jpg',every:900,lon:-78,name:'Шенандоа',s:'National Park Service — леса Голубого хребта, Шенандоа',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-grsm',dayonly:1,type:'img',url:NPS+'grsmlarge.jpg',every:900,lon:-83,name:'Смоки-Маунтинс',s:'National Park Service — Грейт-Смоки-Маунтинс',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-seki',dayonly:1,type:'img',url:NPS+'sekilarge.jpg',every:900,lon:-119,name:'Секвойя',s:'National Park Service — секвойные леса Сьерра-Невады',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-yose',dayonly:1,type:'img',url:NPS+'yoselarge.jpg',every:900,lon:-120,name:'Йосемити',s:'National Park Service — Йосемити',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-mora',dayonly:1,type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'},
+   {id:'fo-wild',ads:1,type:'yt',vid:'F0GOOP82094',name:'Дикая природа · лес',s:'Канал Nature Live Camera (Morten Hilmer, не официальный) — лесная камера 24/7. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=F0GOOP82094'},
+   {id:'fo-shen',type:'img',url:NPS+'shenlarge.jpg',every:900,lon:-78,name:'Шенандоа',s:'National Park Service — леса Голубого хребта, Шенандоа',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-grsm',type:'img',url:NPS+'grsmlarge.jpg',every:900,lon:-83,name:'Смоки-Маунтинс',s:'National Park Service — Грейт-Смоки-Маунтинс',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-seki',type:'img',url:NPS+'sekilarge.jpg',every:900,lon:-119,name:'Секвойя',s:'National Park Service — секвойные леса Сьерра-Невады',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-yose',type:'img',url:NPS+'yoselarge.jpg',every:900,lon:-120,name:'Йосемити',s:'National Park Service — Йосемити',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'fo-mora',type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'},
    {id:'fo-eagle',last:1,type:'yt',vid:'B4-L2nfGcuE',name:'Орлы · Биг-Бер',s:'FOBBV CAM — гнездо белоголовых орланов, Биг-Бер, Калифорния. Живое видео (YouTube)',x:'https://www.friendsofbigbearvalley.org/',lon:-117},
    {id:'fo-beagle',last:1,type:'yt',vid:'_xhLV-TJpd8',name:'Чёрные орлы · ЮАР',s:'Explore.org / Africam — гнездо чёрных орлов, Южная Африка. Живое видео (YouTube)',x:'https://explore.org/livecams/african-wildlife',lon:25},
    {id:'fo-oka',last:1,type:'yt',vid:'JMMoRwYo5kE',name:'Водопой · Этоша',s:'Namibia Wildlife Resorts — водопой Окаукуэджо, национальный парк Этоша, Намибия. Живое видео (YouTube)',x:'https://www.nwr.com.na/',lon:16},
@@ -209,8 +209,8 @@ var EL={
    {id:'au-arj',type:'yt',vid:'5A7JI6saAp4',name:'Арьеплог · Швеция',s:'Канал Planet Fast Forward — озеро Хорнаван, Лапландия, Швеция (неофициальный канал). Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=5A7JI6saAp4',lon:18},
    {id:'au-skar',type:'yt',vid:'iMqrD-HBDGo',name:'Скарсвог · Норвегия',s:'Skarsvåg bygdelag — деревня на севере Норвегии, сияние видно в ясную ночь. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=iMqrD-HBDGo',lon:25}]},
  space:{t:'Космос',src:[
-   {id:'sp-dt1',mode:'stream',type:'yt',vid:'I3sa2kiEpkA',name:'Земля из космоса · МКС',s:'Канал Dream Trips (не официальный) — виды с МКС, ночная сторона Земли. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=I3sa2kiEpkA'},
-   {id:'sp-dt2',mode:'stream',type:'yt',vid:'4QJEibrt9B8',name:'МКС · Земля live 24/7',s:'Канал Dream Trips (не официальный) — Земля с борта МКС. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=4QJEibrt9B8'},
+   {id:'sp-dt1',ads:1,mode:'stream',type:'yt',vid:'I3sa2kiEpkA',name:'Земля из космоса · МКС',s:'Канал Dream Trips (не официальный) — виды с МКС, ночная сторона Земли. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=I3sa2kiEpkA'},
+   {id:'sp-dt2',ads:1,mode:'stream',type:'yt',vid:'4QJEibrt9B8',name:'МКС · Земля live 24/7',s:'Канал Dream Trips (не официальный) — Земля с борта МКС. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=4QJEibrt9B8'},
    {id:'sp-iss',type:'yt',vid:'ROboUHfPUrU',name:'МКС · NASA HD',s:'NASA — официальный прямой эфир: вид Земли с Международной космической станции в высоком разрешении. Иногда идёт заставка при потере связи (YouTube)',x:'https://www.nasa.gov/live/'},
    {id:'sp-sen',type:'hls',mode:'video',url:'https://linear-1224.frequency.stream/dist/lg-uk/1224/hls/master/playlist.m3u8',name:'МКС · Земля live',s:'Sen — Space Live: прямой эфир с камер на МКС и спутниках. Сторонний бесплатный канал Sen, не официальный эфир NASA',x:'https://www.sen.com/'},
    {id:'sp-g19',type:'img',mode:'data',url:GOES+'GOES19/ABI/FD/GEOCOLOR/1808x1808.jpg',every:600,name:'Земля · GOES-19',s:'NOAA — спутник GOES-19 (36 000 км над Атлантикой). Снимок со спутника, обновляется раз в 10 минут',x:'https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G19',
@@ -256,7 +256,9 @@ function resolve(k){
       return score(a)-score(b)||a.i-b.i});
     var all=rest.map(function(o){return o.x}).filter(function(x){return x.mode!=='external'&&!(x.type==='yt'&&location.protocol==='file:')});
     var lit=all.filter(function(x){return !(x.dayonly&&x.lon!==undefined&&!isDay(x.lon))});
-    return sh.concat(lit.length?lit:all);
+    var res=(lit.length?lit:all).map(function(x,i){return {x:x,i:i}});
+    res.sort(function(a,b){function k(o){return o.x.tail?2:o.x.ads?1:0}return k(a)-k(b)||a.i-b.i});
+    return sh.concat(res.map(function(o){return o.x}));
   });
 }
 var home=document.getElementById('home'),view=document.getElementById('view'),stage=document.getElementById('stage'),
