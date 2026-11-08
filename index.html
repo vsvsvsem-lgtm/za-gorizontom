@@ -75,7 +75,9 @@ h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
 .exts a{color:var(--glow)}
 #view.hasext{--bot:156px}
 #view.hasvars.hasext{--bot:190px}
+#view.imm .ytf{top:0;height:100%}
 #view.imm,#view.imm.hasvars,#view.imm.hasext,#view.imm.hasvars.hasext,#view.imm.hint{--top:0px;--bot:0px}
+.ytf{position:absolute;left:0;width:100%;border:0;background:#000;top:calc(env(safe-area-inset-top,0px) + var(--top));height:calc(100% - var(--top) - var(--bot) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));transition:top .5s,height .5s}
 .mode{display:inline-block;font-size:10px;letter-spacing:.14em;border:1px solid #ffffff33;border-radius:6px;padding:1px 6px;margin-right:6px;color:#c9cfdb;vertical-align:1px}
 .live:before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.25}}
@@ -175,15 +177,21 @@ var EL={
    {id:'mt-kilw',type:'img',url:KIL+'observatories/hvo/cams/KWcam/images/M.jpg',every:120,lon:-155,name:'Килауэа · кальдера',s:'USGS HVO — вид на Халемаумау с западной кромки, Килауэа',x:'https://www.usgs.gov/volcanoes/kilauea/multimedia/webcams'}]},
  sea:{t:'Море',keep:true,src:[
    {id:'sea-pore',type:'img',url:NPS+'porelarge.jpg',every:900,name:'Пойнт-Рейес',s:'National Park Service — побережье Пойнт-Рейес, Тихий океан',x:'https://www.nps.gov/subjects/air/webcams.htm'},
+   {id:'sea-kelp',type:'yt',vid:'w3LjpFhySTg',name:'Лес ламинарии',s:'Monterey Bay Aquarium — подводный лес ламинарии, Калифорния. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
+   {id:'sea-jelly',type:'yt',vid:'eQ_foBERmzA',name:'Медузы',s:'Monterey Bay Aquarium — аквариум с медузами. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
+   {id:'sea-shark',type:'yt',vid:'tEtg5Kg3voQ',name:'Акулы',s:'Monterey Bay Aquarium — акулы и крупные рыбы. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
+   {id:'sea-otter',type:'yt',vid:'abbR-Ttd-cA',name:'Морские выдры',s:'Monterey Bay Aquarium — морские выдры. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
+   {id:'sea-mreef',type:'yt',vid:'1VBPxAkaNDU',name:'Коралловый риф',s:'Monterey Bay Aquarium — коралловый риф в аквариуме. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
+   {id:'sea-trop',type:'yt',vid:'DHUnz4dyb54',name:'Тропический риф',s:'Explore.org — тропический риф. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
+   {id:'sea-utopia',type:'yt',vid:'1zcIUk66HX4',name:'Риф Утопия-Виллидж',s:'Explore Oceans — подводная камера над рифом у острова Утила, Гондурас. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
+   {id:'sea-cityc',type:'yt',vid:'7i8ARjIeM2k',name:'Коралловый город · Майами',s:'Coral Morphologic — подводная камера в Майами, Флорида. Живое видео (YouTube)',x:'https://www.coralcitycamera.com/'},
    {id:'sea-cowl',type:'img',url:USGS+'dreaminn/latest/c2_snap.jpg',every:600,name:'Санта-Крус',s:'USGS CoastCam — скалы и прибой, Санта-Крус, Калифорния, Тихий океан',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-suns',type:'img',url:USGS+'sunset/latest/c1_snap.jpg',every:600,name:'Сансет-Бич',s:'USGS CoastCam — океанский прибой, Уотсонвилл, Калифорния',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-nuvk',type:'img',url:USGS+'nuvuk/latest/c1_snap.jpg',every:600,name:'Северный Ледовитый',s:'USGS CoastCam — Нувук, Аляска, Северный Ледовитый океан',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-acad',type:'img',url:NPS+'acadlarge.jpg',every:900,name:'Акадия',s:'National Park Service — Акадия, побережье Атлантики',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'sea-3cat',type:'hls',url:'https://directes-tv-int.3catdirectes.cat/live-content/beauties-hls/master.m3u8',name:'Средиземное море',s:'3Cat «Càmeres del temps» — пляжи и побережье Каталонии',x:'https://www.3cat.cat/3cat/directes/beauties/'},
-   {id:'sea-mbay',mode:'external',type:'external',name:'Monterey Bay Aquarium',s:'Подводные камеры: медузы, выдры, лес ламинарии, океан. Эфир открывается на сайте аквариума',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-gaq',mode:'external',type:'external',name:'Georgia Aquarium',s:'Камеры Ocean Voyager: китовые акулы, скаты, косяки рыб. Эфир открывается на сайте аквариума',x:'https://www.georgiaaquarium.org/webcam/'},
-   {id:'sea-eilat',mode:'external',type:'external',name:'Коралловый риф · Эйлат',s:'Живая камера рифа Красного моря, Эйлат, Израиль. Эфир открывается на сайте проекта',x:'https://www.coralreefs.org.il/en/live-stream'},
-   {id:'sea-explore',mode:'external',type:'external',name:'Explore.org · подводные камеры',s:'Подводные камеры и камеры морских животных. Эфир открывается на сайте Explore.org',x:'https://explore.org/livecams/currently-live'}]},
+   {id:'sea-eilat',mode:'external',type:'external',name:'Коралловый риф · Эйлат',s:'Живая камера рифа Красного моря, Эйлат, Израиль. Эфир открывается на сайте проекта',x:'https://www.coralreefs.org.il/en/live-stream'}]},
  forest:{t:'Лес',src:[
    {id:'fo-shen',type:'img',url:NPS+'shenlarge.jpg',every:900,lon:-78,name:'Шенандоа',s:'National Park Service — леса Голубого хребта, Шенандоа',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'fo-grsm',type:'img',url:NPS+'grsmlarge.jpg',every:900,lon:-83,name:'Смоки-Маунтинс',s:'National Park Service — Грейт-Смоки-Маунтинс',x:'https://www.nps.gov/subjects/air/webcams.htm'},
@@ -191,6 +199,8 @@ var EL={
    {id:'fo-yose',type:'img',url:NPS+'yoselarge.jpg',every:900,lon:-120,name:'Йосемити',s:'National Park Service — Йосемити',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'fo-mora',type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'}]},
  aurora:{t:'Северное сияние',night:true,src:[
+   {id:'au-apuk',type:'yt',vid:'wT8Zhh9MBEE',name:'Рованиеми · Лапландия',s:'Apukka Resort — небо над стеклянными иглу, Рованиеми. Живое видео (YouTube)',x:'https://www.apukka.fi/',lon:26},
+   {id:'au-fbx',type:'yt',vid:'O52zDyxg5QI',name:'Фэрбенкс · Аляска',s:'Explore.org — камера сияния, Фэрбенкс, Аляска. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live',lon:-148},
    {id:'au-tromso',type:'img',url:'https://arcticcampers.no/aurora-forecast/webcam/upload/aurora-cam-tromso-norway.jpg',every:60,lon:19,name:'Тромсё · небо',s:'Arctic Campers — обычная камера на небо, Тромсё, Норвегия (сияние видно в ясную тёмную ночь)',x:'https://arcticcampers.no/aurora-forecast/webcam/'},
    {id:'au-yk',type:'img',url:'https://auroramax.phys.ucalgary.ca/recent/recent_1080p.jpg',every:10,lon:-114,name:'Йеллоунайф',s:'AuroraMAX (Канадское космическое агентство, Univ. of Calgary) — Йеллоунайф, Канада. Камера работает в тёмное время суток',x:'https://ucalgary.ca/aurora/projects/auroramax'},
    {id:'au-uit1',type:'img',url:'https://fox.phys.uit.no/ASC/Latest_ASC01.png',every:60,lon:19,name:'Норвегия · 1',s:'Университет Тромсё (UiT) — all-sky камера №1, Северная Норвегия',x:'https://fox.phys.uit.no/ASC/'},
@@ -199,6 +209,7 @@ var EL={
    {id:'au-ovn',mode:'data',type:'img',url:SWPC+'ovation/north/latest.jpg',every:600,last:1,name:'Овал сияния · Север',s:'NOAA SWPC — где сейчас светится северное сияние. Спутниковая модель, не камера с места',x:'https://www.swpc.noaa.gov/products/aurora-30-minute-forecast'},
    {id:'au-ovs',mode:'data',type:'img',url:SWPC+'ovation/south/latest.jpg',every:600,last:1,name:'Овал сияния · Юг',s:'NOAA SWPC — южное сияние сейчас. Спутниковая модель, не камера с места',x:'https://www.swpc.noaa.gov/products/aurora-30-minute-forecast'}]},
  space:{t:'Космос',src:[
+   {id:'sp-iss',type:'yt',vid:'ROboUHfPUrU',name:'МКС · NASA HD',s:'NASA — официальный прямой эфир: вид Земли с Международной космической станции в высоком разрешении. Иногда идёт заставка при потере связи (YouTube)',x:'https://www.nasa.gov/live/'},
    {id:'sp-sen',type:'hls',mode:'video',url:'https://linear-1224.frequency.stream/dist/lg-uk/1224/hls/master/playlist.m3u8',name:'МКС · Земля live',s:'Sen — Space Live: прямой эфир с камер на МКС и спутниках. Сторонний бесплатный канал Sen, не официальный эфир NASA',x:'https://www.sen.com/'},
    {id:'sp-g19',type:'img',mode:'data',url:GOES+'GOES19/ABI/FD/GEOCOLOR/1808x1808.jpg',every:600,name:'Земля · GOES-19',s:'NOAA — спутник GOES-19 (36 000 км над Атлантикой). Снимок со спутника, обновляется раз в 10 минут',x:'https://www.star.nesdis.noaa.gov/GOES/fulldisk.php?sat=G19',
      variants:[{n:'Цвет',url:GOES+'GOES19/ABI/FD/GEOCOLOR/1808x1808.jpg'},{n:'Воздушные массы',url:GOES+'GOES19/ABI/FD/AirMass/1808x1808.jpg'},{n:'Инфракрасный',url:GOES+'GOES19/ABI/FD/Sandwich/1808x1808.jpg'},{n:'Северная Америка',url:GOES+'GOES19/ABI/CONUS/GEOCOLOR/1250x750.jpg',every:300},{n:'Карибы',url:GOES+'GOES19/ABI/SECTOR/pr/GEOCOLOR/1200x1200.jpg',every:300}]},
@@ -206,13 +217,12 @@ var EL={
      variants:[{n:'Цвет',url:GOES+'GOES18/ABI/FD/GEOCOLOR/1808x1808.jpg'},{n:'Гавайи',url:GOES+'GOES18/ABI/SECTOR/hi/GEOCOLOR/1200x1200.jpg',every:300},{n:'Тихоокеанский СЗ',url:GOES+'GOES18/ABI/SECTOR/pnw/GEOCOLOR/1200x1200.jpg',every:300}]},
    {id:'sp-him',type:'img',mode:'data',url:himaUrl,retry:3,every:600,name:'Азия · Himawari-9',s:'NICT / JMA — спутник Himawari-9: Азия, Австралия, Тихий океан. Снимок со спутника с задержкой около 40 минут, время кадра указано',x:'https://himawari.asia/',
      stamp:function(att){var d=himaTs(att),p=function(n){return ('0'+n).slice(-2)};return 'кадр спутника '+p(d.getUTCHours())+':'+p(d.getUTCMinutes())+' UTC'}},
-   {id:'sp-nasa',mode:'external',type:'external',name:'NASA Live — МКС, запуски, выходы в космос',s:'NASA Live — официальные эфиры NASA. Поток нельзя встроить в приложение, смотрите на сайте NASA',x:NASA_LIVE},
    {id:'sp-eo',mode:'external',type:'external',name:'NASA Earth Observatory',s:'NASA Earth Observatory — научные изображения и данные о Земле (не видео)',x:'https://earthobservatory.nasa.gov/'}]}
 };
 /* единая модель: у каждой записи есть id, mode и стабильные поля */
 Object.keys(EL).forEach(function(k){EL[k].src.forEach(function(e,i){
   e.k=k;e.id=e.id||k+'-'+i;
-  e.mode=e.mode||(e.type==='hls'?'video':'image');
+  e.mode=e.mode||(e.type==='hls'||e.type==='yt'?'video':'image');
   e.provider=e.provider||e.s.split(' — ')[0];e.checkedAt='2026-11-07';e.verified=e.mode!=='external';
   if(e.variants&&!e.vi)e.vi=0;
 })});
@@ -243,7 +253,7 @@ function resolve(k){
     if(!e.keep)rest.sort(function(a,b){
       function score(o){if(o.x.last)return 2;if(o.x.lon===undefined)return 0;var d=isDay(o.x.lon);return (e.night?!d:d)?0:1}
       return score(a)-score(b)||a.i-b.i});
-    return sh.concat(rest.map(function(o){return o.x}).filter(function(x){return x.mode!=='external'}));
+    return sh.concat(rest.map(function(o){return o.x}).filter(function(x){return x.mode!=='external'&&!(x.type==='yt'&&location.protocol==='file:')}));
   });
 }
 
@@ -254,7 +264,7 @@ var home=document.getElementById('home'),view=document.getElementById('view'),st
 
 /* Окно предпросмотра (и часть WebView) запрещает странице грузить видео и картинки с других сайтов.
    Обходить это нельзя — честно говорим и показываем ссылку на сайт источника. */
-var blockedNote=false;
+var blockedNote=false,ytHandler=null,ytSend=null;
 document.addEventListener('securitypolicyviolation',function(ev){
   var dir=ev.effectiveDirective||ev.violatedDirective||'';
   if(!/connect|img|media|default/.test(dir)||blockedNote||!view.classList.contains('on'))return;
@@ -275,6 +285,7 @@ function playing(e,extra,stale){
 }
 function teardown(){
   clearTimeout(watchdog);clearInterval(refresher);live.hidden=true;
+  if(ytHandler){window.removeEventListener('message',ytHandler);ytHandler=null}ytSend=null;
   if(hls){try{hls.destroy()}catch(e){}hls=null}
   if(video){try{video.pause();video.removeAttribute('src');video.load()}catch(e){}video=null}
   stage.innerHTML='';stage.style.background='';
@@ -312,10 +323,10 @@ function play(i,auto){
   document.getElementById('src').appendChild(tag);document.getElementById('src').appendChild(document.createTextNode('Источник: '+e.s));
   document.getElementById('ext').href=e.x;
   [].forEach.call(chips.children,function(c,j){c.setAttribute('aria-pressed',j===i)});
-  snd.hidden=e.type!=='hls';
+  snd.hidden=e.type!=='hls'&&e.type!=='yt';
   setStatus(auto?'Камера не отвечает, переключаемся на «'+e.name+'»…':'Подключаемся к камере «'+e.name+'»…');
-  watchdog=setTimeout(function(){next(my,'нет ответа 20 с')},20000);
-  if(e.type==='hls')playHLS(e,my);else playIMG(e,my);
+  watchdog=setTimeout(function(){next(my,'нет ответа '+(e.type==='yt'?30:20)+' с')},e.type==='yt'?30000:20000);
+  if(e.type==='hls')playHLS(e,my);else if(e.type==='yt')playYT(e,my);else playIMG(e,my);
 }
 function playHLS(e,my){
   video=document.createElement('video');
@@ -335,6 +346,32 @@ function playHLS(e,my){
   }else if(video.canPlayType('application/vnd.apple.mpegurl')){   /* Safari / iOS */
     video.src=e.url;video.addEventListener('error',function(){fail('плеер не смог открыть поток')});var p=video.play();if(p&&p.catch)p.catch(function(){});
   }else{fail('браузер не поддерживает HLS-видео')}
+}
+/* YouTube: официальный встроенный плеер. Работает только с обычного сайта (https://), из файла на диске YouTube отвечает ошибкой 153.
+   Состояние плеера читаем через его API: LIVE показываем лишь когда видео действительно пошло */
+function playYT(e,my){
+  var f=document.createElement('iframe');f.className='ytf';f.title=e.name;
+  f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;
+  f.setAttribute('referrerpolicy','strict-origin-when-cross-origin');
+  f.src='https://www.youtube.com/embed/'+e.vid+'?autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&enablejsapi=1&origin='+encodeURIComponent(location.origin);
+  var ok=false;
+  function send(fn,args){try{f.contentWindow.postMessage(JSON.stringify({event:'command',func:fn,args:args||[]}),'*')}catch(x){}}
+  ytSend=send;
+  f.addEventListener('load',function(){
+    try{f.contentWindow.postMessage(JSON.stringify({event:'listening',id:1,channel:'widget'}),'*')}catch(x){}
+    send('addEventListener',['onStateChange']);send('addEventListener',['onError']);
+  });
+  ytHandler=function(ev){
+    if(my!==session||ev.source!==f.contentWindow)return;
+    var d;try{d=typeof ev.data==='string'?JSON.parse(ev.data):ev.data}catch(x){return}
+    if(!d)return;
+    if(d.event==='onError'){next(my,'эфир сейчас недоступен (код '+d.info+')');return}
+    var state=d.event==='onStateChange'?d.info:(d.event==='infoDelivery'&&d.info&&d.info.playerState!==undefined?d.info.playerState:null);
+    if(state===1&&!ok){ok=true;playing(e);if(!liveMuted)send('unMute')}
+    if(state===0)next(my,'эфир завершился');
+  };
+  window.addEventListener('message',ytHandler);
+  stage.appendChild(f);
 }
 /* обновляемый кадр: новый снимок грузится заранее и сменяет старый без мигания.
    Если источник перестал обновляться — остаётся последний кадр с честной пометкой времени */
@@ -368,7 +405,7 @@ function playIMG(e,my){
   }
   load();refresher=setInterval(load,Math.max(every,10)*1000);
 }
-function setMute(m){liveMuted=m;snd.textContent=m?'🔇 Эфир':'🔊 Эфир';if(video)video.muted=m}
+function setMute(m){liveMuted=m;snd.textContent=m?'🔇 Эфир':'🔊 Эфир';if(video)video.muted=m;if(ytSend)ytSend(m?'mute':'unMute')}
 var ac,master,nodes=[],timer;
 function noise(){var b=ac.createBuffer(1,ac.sampleRate*3,ac.sampleRate),d=b.getChannelData(0),l=0;for(var i=0;i<d.length;i++){l=(l+0.02*(Math.random()*2-1))/1.02;d[i]=l*3.5}var s=ac.createBufferSource();s.buffer=b;s.loop=true;s.start();nodes.push(s);return s}
 function lfo(f,depth,param){var o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.value=depth;o.connect(g);g.connect(param);o.start();nodes.push(o)}
