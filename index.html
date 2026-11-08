@@ -43,17 +43,16 @@ h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
 .c-space{--g:#b9a4ff;background:radial-gradient(circle at 70% 25%,#2a1a5e,#0a0614 65%)}
 .cta{font:400 20px var(--serif);font-style:italic;color:#d6dbe6}
 @media (max-width:520px){.card:last-child{grid-column:1/-1}}
-#view{--top:116px;--bot:130px;position:fixed;inset:0;background:#000;opacity:0;visibility:hidden;transition:opacity .7s,visibility .7s;z-index:5}
+#view{position:fixed;inset:0;display:flex;flex-direction:column;background:#000;opacity:0;visibility:hidden;transition:opacity .7s,visibility .7s;z-index:5;overflow:hidden}
 #view.on{opacity:1;visibility:visible}
-#stage{position:absolute;inset:0;transform:scale(1.04);transition:transform 1.6s ease-out;overflow:hidden}
-#view.on #stage{transform:scale(1)}
+#stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;background:#000}
 #stage video,#stage>div{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
-#stage video{object-fit:cover}
+#stage video{object-fit:contain}
 .still{position:absolute;inset:0;background:#000;overflow:hidden}
 .still .ly{position:absolute;inset:0;opacity:0;transition:opacity 1.5s}
 .still .ly.on{opacity:1}
 .still .bg{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(26px) brightness(.5) saturate(1.2)}
-.still .fg{position:absolute;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + var(--top));width:100%;height:calc(100% - var(--top) - var(--bot) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));object-fit:contain;transition:top .5s,height .5s}
+.still .fg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 #status{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;display:flex;flex-direction:column;align-items:center;gap:12px;color:#c9cfdb;font-size:14px;text-align:center;max-width:min(520px,90vw);line-height:1.5;transition:opacity .5s}
 #status.hide{opacity:0;pointer-events:none}
 #status i{width:34px;height:34px;border-radius:50%;border:2px solid #ffffff26;border-top-color:var(--glow);animation:spin 1s linear infinite}
@@ -66,34 +65,29 @@ h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
 .vars:empty{display:none}
 .vars .btn{padding:4px 10px;font-size:11px;background:#ffffff12}
 .vars .btn[aria-pressed=true]{border-color:var(--glow);background:#ffffff33}
-#view.hasvars{--bot:166px}
 .exts{margin:0 auto 8px;max-width:520px;font-size:12px;color:#c9cfdb}
 .exts summary{cursor:pointer;list-style:none;display:inline-block;border:1px solid #ffffff2e;border-radius:99px;padding:4px 11px;background:#ffffff12}
 .exts summary::-webkit-details-marker{display:none}
 .exts[open] summary{border-color:var(--glow)}
 #extl{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;margin-top:8px}
 .exts a{color:var(--glow)}
-#view.hasext{--bot:156px}
-#view.hasvars.hasext{--bot:190px}
-#view.imm .ytf{top:0;height:100%}
-#view.imm,#view.imm.hasvars,#view.imm.hasext,#view.imm.hasvars.hasext,#view.imm.hint{--top:0px;--bot:0px}
-.ytf{position:absolute;left:0;width:100%;border:0;background:#000;top:calc(env(safe-area-inset-top,0px) + var(--top));height:calc(100% - var(--top) - var(--bot) - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));transition:top .5s,height .5s}
+#view.imm .bar,#view.imm .foot{display:none}
+@media (orientation:landscape) and (max-height:520px){#view{display:grid;grid-template-columns:minmax(0,1fr) 300px;grid-template-rows:auto minmax(0,1fr)}#stage{grid-column:1;grid-row:1/3}.bar{grid-column:2;grid-row:1}.foot{grid-column:2;grid-row:2;max-height:none}#view.imm{display:flex}}
+.ytf{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
 .mode{display:inline-block;font-size:10px;letter-spacing:.14em;border:1px solid #ffffff33;border-radius:6px;padding:1px 6px;margin-right:6px;color:#c9cfdb;vertical-align:1px}
 .live:before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.25}}
-.chips{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
-.chips .btn{padding:6px 12px;font-size:12px}
+.chips{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;margin:0 -16px 10px;padding:2px 16px}
+.chips::-webkit-scrollbar{display:none}
+.chips::before,.chips::after{content:"";margin:auto}
+.chips .btn{padding:6px 12px;font-size:12px;flex:none;white-space:nowrap}
 .chips .btn[aria-pressed=true]{border-color:var(--glow);background:#ffffff33;box-shadow:0 0 14px -4px var(--glow)}
-.bar{position:absolute;left:0;right:0;top:0;display:flex;flex-direction:column;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 12px) 14px 22px;background:linear-gradient(#000c,#0000);z-index:2;transition:opacity .4s}
+.bar{position:relative;flex:0 0 auto;display:flex;flex-direction:column;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 10px;background:#000;z-index:2}
 .bar .r1,.bar .r2{display:flex;align-items:center;gap:8px}
 .bar .r2{flex-wrap:wrap}
-#view.hint{--top:172px}
 .bar .r2 .btn{padding:7px 9px;font-size:12px}
 #hint{display:none;font-size:12.5px;line-height:1.4;color:#d8e8e0;background:#ffffff18;border:1px solid #ffffff22;border-radius:14px;padding:7px 11px;backdrop-filter:blur(8px)}
 #view.hint #hint{display:block}
-#view.imm{--top:0px;--bot:0px}
-#view.imm .bar,#view.imm .foot{opacity:0;pointer-events:none}
-.bar,.foot{transition:opacity .4s}
 .btn.on{border-color:var(--glow);background:#ffffff33}
 #exitimm{position:fixed;z-index:3;right:calc(env(safe-area-inset-right,0px) + 12px);top:calc(env(safe-area-inset-top,0px) + 12px);opacity:0;pointer-events:none;padding:6px 11px}
 #view.imm #exitimm{opacity:.35;pointer-events:auto}
@@ -104,7 +98,7 @@ h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
 .bar h2{font:500 26px var(--serif);flex:1;min-width:0;text-shadow:0 0 18px var(--glow)}
 .btn{background:#ffffff1f;color:var(--fg);border:1px solid #ffffff2e;border-radius:99px;padding:8px 13px;font:400 13px var(--sans);backdrop-filter:blur(8px);cursor:pointer}
 .btn:hover{border-color:var(--glow);box-shadow:0 0 18px -4px var(--glow)}
-.foot{position:absolute;left:0;right:0;bottom:0;padding:26px 16px calc(env(safe-area-inset-bottom,0px) + 14px);text-align:center;background:linear-gradient(#0000,#000d);z-index:2;font-size:13px;line-height:1.5;color:#c9cfdb}
+.foot{position:relative;flex:0 0 auto;max-height:44vh;overflow-y:auto;padding:10px 16px calc(env(safe-area-inset-bottom,0px) + 12px);text-align:center;background:#000;z-index:2;font-size:13px;line-height:1.5;color:#c9cfdb}
 .foot a{color:var(--glow)}
 .foot small{display:block;color:#98a0b3;margin-top:4px}
 </style>
@@ -139,14 +133,12 @@ h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
   <div id="favs"></div>
   <p class="cta">Одна кнопка — и ты уже там</p>
 </main>
-
 <section id="view" aria-live="polite">
   <div id="stage"></div>
   <div id="status"><i></i><span id="stxt">Подключаемся к камере…</span><button class="btn" id="retry" hidden>Повторить</button></div>
   <button class="btn" id="exitimm" aria-label="Выйти из полноэкранного режима">✕</button><div class="bar"><div class="r1"><button class="btn" id="back">← Назад</button><h2 id="ttl"></h2><button class="btn" id="fs" title="На весь экран, без интерфейса" aria-label="На весь экран">⛶</button></div><div class="r2"><button class="btn" id="amb">🔊 Природа</button><button class="btn" id="snd">🔇 Эфир</button><button class="btn" id="fav" aria-pressed="false">☆ Избранное</button><button class="btn" id="slp" title="Таймер сна">☾ Сон</button></div><div id="hint"></div></div>
   <div class="foot"><div class="vars" id="vars"></div><details class="exts" id="exts" hidden><summary id="extsum"></summary><div id="extl"></div></details><div class="chips" id="chips"></div><span class="live" id="live" hidden>Прямой эфир</span><div id="src"></div><small>Не загрузилось? <a id="ext" target="_blank" rel="noopener">Открыть на сайте источника ↗</a></small></div>
 </section>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
 <script>if(!window.Hls)document.write('<script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.13/dist/hls.min.js"><\/script>')</script>
 <script>
@@ -185,6 +177,10 @@ var EL={
    {id:'sea-trop',type:'yt',vid:'DHUnz4dyb54',name:'Тропический риф',s:'Explore.org — тропический риф. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
    {id:'sea-utopia',type:'yt',vid:'1zcIUk66HX4',name:'Риф Утопия-Виллидж',s:'Explore Oceans — подводная камера над рифом у острова Утила, Гондурас. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live'},
    {id:'sea-cityc',type:'yt',vid:'7i8ARjIeM2k',name:'Коралловый город · Майами',s:'Coral Morphologic — подводная камера в Майами, Флорида. Живое видео (YouTube)',x:'https://www.coralcitycamera.com/'},
+   {id:'sea-peng1',type:'yt',vid:'KlVMg-8SIlw',name:'Пингвины под водой',s:'Aquarium of the Pacific через Explore.org — пингвины под водой, Лонг-Бич, США. Живое видео (YouTube)',x:'https://explore.org/livecams/aquarium-of-the-pacific'},
+   {id:'sea-peng2',type:'yt',vid:'GSxpCbXsvtI',name:'Пляж пингвинов',s:'Aquarium of the Pacific через Explore.org — «пляж» пингвинов, Лонг-Бич, США. Живое видео (YouTube)',x:'https://explore.org/livecams/aquarium-of-the-pacific'},
+   {id:'sea-open',type:'yt',vid:'n_GpVsz4nHU',name:'Открытое море · Монтерей',s:'Monterey Bay Aquarium — главный аквариум с тунцами, акулами, черепахами, Калифорния. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
+   {id:'sea-crab',type:'yt',vid:'dzmJXWmA2EM',name:'Краб-паук · Монтерей',s:'Monterey Bay Aquarium — гигантские крабы-пауки, Калифорния. Живое видео (YouTube)',x:'https://www.montereybayaquarium.org/cams-videos/live-cams'},
    {id:'sea-cowl',type:'img',url:USGS+'dreaminn/latest/c2_snap.jpg',every:600,name:'Санта-Крус',s:'USGS CoastCam — скалы и прибой, Санта-Крус, Калифорния, Тихий океан',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-suns',type:'img',url:USGS+'sunset/latest/c1_snap.jpg',every:600,name:'Сансет-Бич',s:'USGS CoastCam — океанский прибой, Уотсонвилл, Калифорния',x:'https://coastcam.ucsd.edu/'},
    {id:'sea-nuvk',type:'img',url:USGS+'nuvuk/latest/c1_snap.jpg',every:600,name:'Северный Ледовитый',s:'USGS CoastCam — Нувук, Аляска, Северный Ледовитый океан',x:'https://coastcam.ucsd.edu/'},
@@ -197,17 +193,19 @@ var EL={
    {id:'fo-grsm',type:'img',url:NPS+'grsmlarge.jpg',every:900,lon:-83,name:'Смоки-Маунтинс',s:'National Park Service — Грейт-Смоки-Маунтинс',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'fo-seki',type:'img',url:NPS+'sekilarge.jpg',every:900,lon:-119,name:'Секвойя',s:'National Park Service — секвойные леса Сьерра-Невады',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'fo-yose',type:'img',url:NPS+'yoselarge.jpg',every:900,lon:-120,name:'Йосемити',s:'National Park Service — Йосемити',x:'https://www.nps.gov/subjects/air/webcams.htm'},
-   {id:'fo-mora',type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'}]},
+   {id:'fo-mora',type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'},
+   {id:'fo-eagle',last:1,type:'yt',vid:'B4-L2nfGcuE',name:'Орлы · Биг-Бер',s:'FOBBV CAM — гнездо белоголовых орланов, Биг-Бер, Калифорния. Живое видео (YouTube)',x:'https://www.friendsofbigbearvalley.org/',lon:-117},
+   {id:'fo-beagle',last:1,type:'yt',vid:'_xhLV-TJpd8',name:'Чёрные орлы · ЮАР',s:'Explore.org / Africam — гнездо чёрных орлов, Южная Африка. Живое видео (YouTube)',x:'https://explore.org/livecams/african-wildlife',lon:25},
+   {id:'fo-oka',last:1,type:'yt',vid:'JMMoRwYo5kE',name:'Водопой · Этоша',s:'Namibia Wildlife Resorts — водопой Окаукуэджо, национальный парк Этоша, Намибия. Живое видео (YouTube)',x:'https://www.nwr.com.na/',lon:16},
+   {id:'fo-donyo',last:1,type:'yt',vid:'XsOU8JnEpNM',name:'Саванна · Кения',s:'Africam — ол-Донью Лодж, Кения. Живое видео (YouTube)',x:'https://www.africam.com/',lon:37}]},
  aurora:{t:'Северное сияние',night:true,src:[
    {id:'au-apuk',type:'yt',vid:'wT8Zhh9MBEE',name:'Рованиеми · Лапландия',s:'Apukka Resort — небо над стеклянными иглу, Рованиеми. Живое видео (YouTube)',x:'https://www.apukka.fi/',lon:26},
    {id:'au-fbx',type:'yt',vid:'O52zDyxg5QI',name:'Фэрбенкс · Аляска',s:'Explore.org — камера сияния, Фэрбенкс, Аляска. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live',lon:-148},
    {id:'au-tromso',type:'img',url:'https://arcticcampers.no/aurora-forecast/webcam/upload/aurora-cam-tromso-norway.jpg',every:60,lon:19,name:'Тромсё · небо',s:'Arctic Campers — обычная камера на небо, Тромсё, Норвегия (сияние видно в ясную тёмную ночь)',x:'https://arcticcampers.no/aurora-forecast/webcam/'},
-   {id:'au-yk',type:'img',url:'https://auroramax.phys.ucalgary.ca/recent/recent_1080p.jpg',every:10,lon:-114,name:'Йеллоунайф',s:'AuroraMAX (Канадское космическое агентство, Univ. of Calgary) — Йеллоунайф, Канада. Камера работает в тёмное время суток',x:'https://ucalgary.ca/aurora/projects/auroramax'},
-   {id:'au-uit1',type:'img',url:'https://fox.phys.uit.no/ASC/Latest_ASC01.png',every:60,lon:19,name:'Норвегия · 1',s:'Университет Тромсё (UiT) — all-sky камера №1, Северная Норвегия',x:'https://fox.phys.uit.no/ASC/'},
-   {id:'au-uit2',type:'img',url:'https://fox.phys.uit.no/ASC/Latest_ASC02.png',every:60,lon:19,name:'Норвегия · 2',s:'Университет Тромсё (UiT) — all-sky камера №2, Северная Норвегия',x:'https://fox.phys.uit.no/ASC/'},
-   {id:'au-fmi',type:'img',url:'https://space.fmi.fi/MIRACLE/RWC/latest_MUO.jpg',every:60,lon:24,name:'Финляндия',s:'Финский метеоинститут (FMI) — all-sky камера, Муонио, Лапландия',x:'https://space.fmi.fi/MIRACLE/ASC/'},
-   {id:'au-ovn',mode:'data',type:'img',url:SWPC+'ovation/north/latest.jpg',every:600,last:1,name:'Овал сияния · Север',s:'NOAA SWPC — где сейчас светится северное сияние. Спутниковая модель, не камера с места',x:'https://www.swpc.noaa.gov/products/aurora-30-minute-forecast'},
-   {id:'au-ovs',mode:'data',type:'img',url:SWPC+'ovation/south/latest.jpg',every:600,last:1,name:'Овал сияния · Юг',s:'NOAA SWPC — южное сияние сейчас. Спутниковая модель, не камера с места',x:'https://www.swpc.noaa.gov/products/aurora-30-minute-forecast'}]},
+   {id:'au-rey',type:'yt',vid:'exshoGpNXZk',name:'Рейкьявик · Исландия',s:'Aurora Reykjavík — центр северного сияния, небо над городом. Живое видео (YouTube)',x:'https://aurora.is/',lon:-22},
+   {id:'au-expl',type:'yt',vid:'a0i1Kg6fROg',name:'Explore · Сияние',s:'Explore.org — камера северного сияния и ночной природы. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live',lon:-100},
+   {id:'au-arj',type:'yt',vid:'5A7JI6saAp4',name:'Арьеплог · Швеция',s:'Канал Planet Fast Forward — озеро Хорнаван, Лапландия, Швеция (неофициальный канал). Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=5A7JI6saAp4',lon:18},
+   {id:'au-skar',type:'yt',vid:'iMqrD-HBDGo',name:'Скарсвог · Норвегия',s:'Skarsvåg bygdelag — деревня на севере Норвегии, сияние видно в ясную ночь. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=iMqrD-HBDGo',lon:25}]},
  space:{t:'Космос',src:[
    {id:'sp-iss',type:'yt',vid:'ROboUHfPUrU',name:'МКС · NASA HD',s:'NASA — официальный прямой эфир: вид Земли с Международной космической станции в высоком разрешении. Иногда идёт заставка при потере связи (YouTube)',x:'https://www.nasa.gov/live/'},
    {id:'sp-sen',type:'hls',mode:'video',url:'https://linear-1224.frequency.stream/dist/lg-uk/1224/hls/master/playlist.m3u8',name:'МКС · Земля live',s:'Sen — Space Live: прямой эфир с камер на МКС и спутниках. Сторонний бесплатный канал Sen, не официальный эфир NASA',x:'https://www.sen.com/'},
@@ -226,7 +224,6 @@ Object.keys(EL).forEach(function(k){EL[k].src.forEach(function(e,i){
   e.provider=e.provider||e.s.split(' — ')[0];e.checkedAt='2026-11-07';e.verified=e.mode!=='external';
   if(e.variants&&!e.vi)e.vi=0;
 })});
-
 /* Камеры Шымбулака. Стартуем сразу с известных адресов (как в рабочей версии),
    а официальный API курорта опрашиваем в фоне: если камеры поменяются, список обновится сам. */
 var SHYM=[['https://ipcam.kz/cam6/index.m3u8','Ледник Богдановича'],['https://ipcam.kz/cam5/index.m3u8','Средняя станция'],['https://ipcam.kz/cam1/index.m3u8','Базовая станция']];
@@ -256,12 +253,10 @@ function resolve(k){
     return sh.concat(rest.map(function(o){return o.x}).filter(function(x){return x.mode!=='external'&&!(x.type==='yt'&&location.protocol==='file:')}));
   });
 }
-
 var home=document.getElementById('home'),view=document.getElementById('view'),stage=document.getElementById('stage'),
  snd=document.getElementById('snd'),amb=document.getElementById('amb'),st=document.getElementById('status'),stxt=document.getElementById('stxt'),
  live=document.getElementById('live'),retryBtn=document.getElementById('retry'),chips=document.getElementById('chips'),
  liveMuted=true,ambOn=true,cur=null,list=[],idx=0,session=0,why=[],hls=null,video=null,watchdog=null,refresher=null;
-
 /* Окно предпросмотра (и часть WebView) запрещает странице грузить видео и картинки с других сайтов.
    Обходить это нельзя — честно говорим и показываем ссылку на сайт источника. */
 var blockedNote=false,ytHandler=null,ytSend=null;
@@ -462,7 +457,6 @@ document.getElementById('back').addEventListener('click',close);
 amb.addEventListener('click',function(){ambOn=!ambOn;amb.textContent=ambOn?'🔊 Природа':'🔇 Природа';if(ambOn)startAmb(cur);else stopAmb(false)});
 snd.addEventListener('click',function(){setMute(!liveMuted)});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(view.classList.contains('imm'))setImm(false);else close()}});
-
 /* ---------- память: избранное и последняя камера ---------- */
 function lsGet(k,d){try{var v=JSON.parse(localStorage.getItem(k)||'null');return v==null?d:v}catch(e){return d}}
 function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
@@ -491,7 +485,6 @@ document.getElementById('fav').addEventListener('click',function(){
   lsSet('zg_fav',FAV);updateFav();
 });
 renderFavs();
-
 /* ---------- на весь экран / без интерфейса ---------- */
 function setImm(on){
   view.classList.toggle('imm',!!on);
@@ -506,7 +499,6 @@ document.getElementById('exitimm').addEventListener('click',function(ev){ev.stop
 view.addEventListener('click',function(){if(view.classList.contains('imm'))setImm(false)});
 function fsChange(){if(!document.fullscreenElement&&!document.webkitFullscreenElement&&view.classList.contains('imm'))view.classList.remove('imm')}
 document.addEventListener('fullscreenchange',fsChange);document.addEventListener('webkitfullscreenchange',fsChange);
-
 /* ---------- таймер сна: звук плавно затихает, потом возврат на главную ---------- */
 var SLP=[0,15,30,60],slpI=0,slpEnd=0,slpT=null,slpBtn=document.getElementById('slp');
 function slpStop(){clearInterval(slpT);slpT=null;slpI=0;slpEnd=0;slpBtn.textContent='☾ Сон';slpBtn.classList.remove('on')}
@@ -521,13 +513,11 @@ slpBtn.addEventListener('click',function(){
   if(!SLP[slpI]){slpStop();return}
   slpEnd=Date.now()+SLP[slpI]*60000;slpBtn.classList.add('on');slpTick();slpT=setInterval(slpTick,1000);
 });
-
 /* ---------- экран не гаснет, пока смотришь ---------- */
 var wl=null;
 function wakeOn(){try{if(navigator.wakeLock&&!wl)navigator.wakeLock.request('screen').then(function(l){wl=l;l.addEventListener('release',function(){wl=null})}).catch(function(){})}catch(e){}}
 function wakeOff(){try{if(wl){wl.release();wl=null}}catch(e){}}
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&view.classList.contains('on'))wakeOn()});
-
 /* ---------- сияние: где сейчас ночь и индекс активности Kp ---------- */
 var kpCache={t:0,v:null};
 function kpText(kp){
@@ -549,7 +539,6 @@ function updateHint(){
     var last=j[j.length-1],kp=parseFloat(Array.isArray(last)?last[1]:last.Kp);
     kpCache={t:Date.now(),v:kp};if(cur==='aurora')show(kp)}).catch(function(){})}catch(e){}
 }
-
 /* ---------- установка как приложения (нужен https-адрес) ---------- */
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
 </script>
