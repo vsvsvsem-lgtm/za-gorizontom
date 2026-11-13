@@ -30,11 +30,11 @@ body[data-el=space]{--glow:#b9a4ff;--bg:#0a0614}
 h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
 .sub{color:var(--mut);font-weight:300;text-align:center}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;width:100%;max-width:1000px}
-.card{position:relative;overflow:hidden;min-height:220px;border:1px solid #ffffff1a;border-radius:22px;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;text-align:left;color:var(--fg);cursor:pointer;font:inherit;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,border-color .45s}
+.card{position:relative;overflow:hidden;min-height:220px;border:1px solid #ffffff1a;border-radius:22px;padding:18px 12px 18px 16px;display:flex;flex-direction:column;justify-content:flex-end;text-align:left;color:var(--fg);cursor:pointer;font:inherit;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,border-color .45s}
 .card:hover,.card:focus-visible{transform:scale(1.04);border-color:var(--g);box-shadow:0 0 44px -6px var(--g);outline:none}
 .card:active{transform:scale(.99)}
 .card svg{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
-.card b{position:relative;font:500 30px var(--serif)}
+.card b{position:relative;font-family:var(--serif);font-weight:500}
 .card span{position:relative;color:#ffffffb3;font-weight:300;font-size:13px;margin-top:2px}
 .c-mountains{--g:#9ad0ff;background:linear-gradient(180deg,#14304f,#0a1626 75%)}
 .c-sea{--g:#6fe0d2;background:linear-gradient(180deg,#e9b872 0%,#2a8f8f 48%,#07242a 100%)}
@@ -72,7 +72,7 @@ h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
 #extl{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;margin-top:8px}
 .exts a{color:var(--glow)}
 
-.c-aurora b{font-size:clamp(15px,4.6vw,20px);white-space:nowrap;letter-spacing:-.01em}
+.card b{font-size:var(--nm,22px);white-space:nowrap;line-height:1.1}.c-aurora b{letter-spacing:0}
 .tiles{width:100%;max-width:560px;display:flex;flex-direction:column;gap:12px}
 .tile{display:flex;align-items:center;gap:16px;width:100%;text-align:left;color:var(--fg);font:inherit;cursor:pointer;border:1px solid #ffffff26;border-radius:99px;padding:12px 20px 12px 14px;background:linear-gradient(180deg,#ffffff14,#ffffff08);backdrop-filter:blur(10px);box-shadow:0 10px 30px -14px #000;transition:border-color .3s,box-shadow .3s}
 .tile:hover,.tile:focus-visible{border-color:#b9b3ff;box-shadow:0 0 30px -8px #8f86ff;outline:none}
@@ -178,7 +178,7 @@ h1{font:500 clamp(38px,9vw,72px)/1.05 var(--serif);text-align:center}
 <section id="view" aria-live="polite">
   <div id="stage"></div>
   <div id="status"><i></i><span id="stxt">Подключаемся к камере…</span><button class="btn" id="retry" hidden>Повторить</button></div>
-  <button class="btn" id="exitimm" aria-label="Выйти из полноэкранного режима">✕</button><div class="bar"><div class="r1"><button class="btn" id="back">← Назад</button><h2 id="ttl"></h2><button class="btn" id="fs" title="На весь экран, без интерфейса" aria-label="На весь экран">⛶</button></div><div class="r2"><button class="btn" id="amb">🔊 Природа</button><button class="btn" id="snd">🔇 Эфир</button><button class="btn" id="fav" aria-pressed="false">☆ Избранное</button><button class="btn" id="slp" title="Таймер сна">☾ Сон</button><button class="btn" id="shot" title="Сохранить кадр во «Встречи и впечатления»">📷 Снимок</button><button class="btn" id="grp" hidden></button></div><div id="hint"></div></div>
+  <button class="btn" id="exitimm" aria-label="Выйти из полноэкранного режима">✕</button><div class="bar"><div class="r1"><button class="btn" id="back">← Назад</button><h2 id="ttl"></h2><button class="btn" id="fs" title="На весь экран, без интерфейса" aria-label="На весь экран">⛶</button></div><div class="r2"><button class="btn" id="amb">🔊 Природа</button><button class="btn" id="snd">🔇 Эфир</button><button class="btn" id="fav" aria-pressed="false">☆ Избранное</button><button class="btn" id="slp" title="Таймер сна">☾ Сон</button><button class="btn" id="grp" hidden></button></div><div id="hint"></div></div>
   <div class="foot"><div class="vars" id="vars"></div><div class="chips" id="chips"></div><span class="live" id="live" hidden>Прямой эфир</span><div id="src"></div><small>Не загрузилось? <a id="ext" target="_blank" rel="noopener">Открыть на сайте источника ↗</a></small></div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js"></script>
@@ -245,7 +245,7 @@ var EL={
    {id:'fo-flyway',type:'yt',vid:'1aPhtRjjzb0',name:'Перелётные птицы · Калифорния',s:'Explore.org — заповедник Сакраменто, США. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live',lon:-122},
    {id:'fo-tau',type:'yt',vid:'DsNtwGJXTTs',name:'Африка · Тау',s:'Explore.org / Africam — Африка. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live',lon:25},
    {id:'fo-fig',type:'yt',vid:'Io1Kle7QR-E',name:'Масаи-Мара · переправа',s:'Explore.org / Africam — Масаи-Мара, Кения. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live',lon:35},
-   {id:'fo-wild',ads:1,type:'yt',vid:'F0GOOP82094',name:'Дикая природа · лес',s:'Канал Nature Live Camera (Morten Hilmer, не официальный) — лесная камера 24/7. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=F0GOOP82094'},
+   {id:'fo-wild',pri:3,type:'yt',vid:'F0GOOP82094',name:'Дикая природа · лес',s:'Канал Nature Live Camera (Morten Hilmer, не официальный) — лесная камера 24/7. Живое видео (YouTube)',x:'https://www.youtube.com/watch?v=F0GOOP82094'},
    {id:'fo-shen',type:'img',url:NPS+'shenlarge.jpg',every:900,lon:-78,name:'Шенандоа',s:'National Park Service — леса Голубого хребта, Шенандоа',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'fo-grsm',type:'img',url:NPS+'grsmlarge.jpg',every:900,lon:-83,name:'Смоки-Маунтинс',s:'National Park Service — Грейт-Смоки-Маунтинс',x:'https://www.nps.gov/subjects/air/webcams.htm'},
    {id:'fo-seki',type:'img',url:NPS+'sekilarge.jpg',every:900,lon:-119,name:'Секвойя',s:'National Park Service — секвойные леса Сьерра-Невады',x:'https://www.nps.gov/subjects/air/webcams.htm'},
@@ -253,8 +253,8 @@ var EL={
    {id:'fo-mora',type:'img',url:'https://www.nps.gov/webcams-mora/mountain.jpg',every:300,lon:-122,name:'Маунт-Рейнир',s:'National Park Service — Маунт-Рейнир, штат Вашингтон (кадр 1920×1080)',x:'https://www.nps.gov/mora/learn/photosmultimedia/webcams.htm'},
    {id:'fo-eagle',last:1,type:'yt',vid:'B4-L2nfGcuE',name:'Орлы · Биг-Бер',s:'FOBBV CAM — гнездо белоголовых орланов, Биг-Бер, Калифорния. Живое видео (YouTube)',x:'https://www.friendsofbigbearvalley.org/',lon:-117},
    {id:'fo-beagle',last:1,type:'yt',vid:'_xhLV-TJpd8',name:'Чёрные орлы · ЮАР',s:'Explore.org / Africam — гнездо чёрных орлов, Южная Африка. Живое видео (YouTube)',x:'https://explore.org/livecams/african-wildlife',lon:25},
-   {id:'fo-oka',last:1,type:'yt',vid:'JMMoRwYo5kE',name:'Водопой · Этоша',s:'Namibia Wildlife Resorts — водопой Окаукуэджо, национальный парк Этоша, Намибия. Живое видео (YouTube)',x:'https://www.nwr.com.na/',lon:16},
-   {id:'fo-donyo',last:1,type:'yt',vid:'XsOU8JnEpNM',name:'Саванна · Кения',s:'Africam — ол-Донью Лодж, Кения. Живое видео (YouTube)',x:'https://www.africam.com/',lon:37}]},
+   {id:'fo-oka',pri:2,last:1,type:'yt',vid:'JMMoRwYo5kE',name:'Водопой · Этоша',s:'Namibia Wildlife Resorts — водопой Окаукуэджо, национальный парк Этоша, Намибия. Живое видео (YouTube)',x:'https://www.nwr.com.na/',lon:16},
+   {id:'fo-donyo',pri:1,last:1,type:'yt',vid:'XsOU8JnEpNM',name:'Саванна · Кения',s:'Africam — ол-Донью Лодж, Кения. Живое видео (YouTube)',x:'https://www.africam.com/',lon:37}]},
  aurora:{t:'Северное сияние',night:true,src:[
    {id:'au-apuk',type:'yt',vid:'wT8Zhh9MBEE',name:'Рованиеми · Лапландия',s:'Apukka Resort — небо над стеклянными иглу, Рованиеми. Живое видео (YouTube)',x:'https://www.apukka.fi/',lon:26},
    {id:'au-fbx',type:'yt',vid:'O52zDyxg5QI',name:'Фэрбенкс · Аляска',s:'Explore.org — камера сияния, Фэрбенкс, Аляска. Живое видео (YouTube)',x:'https://explore.org/livecams/currently-live',lon:-148},
@@ -312,7 +312,7 @@ function resolve(k){
     var all=rest.map(function(o){return o.x}).filter(function(x){return x.mode!=='external'&&!(x.type==='yt'&&location.protocol==='file:')});
     var lit=all.filter(function(x){return !(x.dayonly&&x.lon!==undefined&&!isDay(x.lon))});
     var res=(lit.length?lit:all).map(function(x,i){return {x:x,i:i}});
-    res.sort(function(a,b){function k(o){return o.x.tail?2:o.x.ads?1:0}return k(a)-k(b)||a.i-b.i});
+    res.sort(function(a,b){function k(o){return o.x.pri?o.x.pri-10:o.x.tail?2:o.x.ads?1:0}return k(a)-k(b)||a.i-b.i});
     return sh.concat(res.map(function(o){return o.x}));
   });
 }
@@ -445,7 +445,7 @@ function playIMG(e,my){
       ly.appendChild(bg);ly.appendChild(fg);box.appendChild(ly);
       requestAnimationFrame(function(){requestAnimationFrame(function(){ly.classList.add('on')})});
       var old=box.querySelectorAll('.ly');for(var j=0;j<old.length-1;j++)(function(o){o.classList.remove('on');setTimeout(function(){o.remove()},1700)})(old[j]);
-      e._cur=im.src;lastOk=hhmm();first=false;badge(false);
+      lastOk=hhmm();first=false;badge(false);
     };
     im.onerror=function(){
       if(my!==session)return;
@@ -538,7 +538,7 @@ function updateFav(){
 function renderFavs(){
   var n=FAV.filter(function(f){return EL[f.split('|')[0]]}).length;
   document.getElementById('favN').textContent=n?n+' '+plur(n,'камера','камеры','камер'):'пока пусто';
-  document.getElementById('shotN').textContent=SHOTS.length?SHOTS.length+' '+plur(SHOTS.length,'снимок','снимка','снимков'):'снимков пока нет';
+  document.getElementById('shotN').textContent=SHOTS.length?SHOTS.length+' '+plur(SHOTS.length,'снимок','снимка','снимков'):'загрузите свой скриншот';
 }
 function plur(n,a,b,c){var m=n%100,d=n%10;return m>10&&m<20?c:d===1?a:d>1&&d<5?b:c}
 /* ---------- папки Live video / Live image ---------- */
@@ -586,21 +586,8 @@ function toJpeg(src,w,h){
   var k=Math.min(1,960/w),c=document.createElement('canvas');c.width=Math.round(w*k);c.height=Math.round(h*k);
   c.getContext('2d').drawImage(src,0,0,c.width,c.height);return c.toDataURL('image/jpeg',.78);
 }
-function takeShot(){
-  var e=list[idx];if(!e||view.classList.contains('imm'))return;
-  var cam=EL[cur].t+' · '+e.name,now=Date.now();
-  function ok(url){if(addShot(url,now,cam))toast('Снимок сохранён во «Встречи и впечатления» · '+fmtDT(now));else toast('Снимок сохранён, но память браузера заполнена: старые снимки удалены.')}
-  function denied(){toast(e.type==='yt'?'YouTube не позволяет сохранять кадр из встроенного плеера. Сделайте скриншот телефоном и добавьте его кнопкой «Добавить снимок» во «Встречи и впечатления».':'Источник этой камеры запрещает копировать кадр. Сделайте скриншот телефоном и добавьте его во «Встречи и впечатления».')}
-  if(video&&video.videoWidth){try{ok(toJpeg(video,video.videoWidth,video.videoHeight));return}catch(x){denied();return}}
-  if(e.type==='img'&&e._cur){
-    var im=new Image();im.crossOrigin='anonymous';
-    im.onload=function(){try{ok(toJpeg(im,im.naturalWidth,im.naturalHeight))}catch(x){denied()}};
-    im.onerror=denied;im.src=e._cur+(e._cur.indexOf('?')<0?'?':'&')+'cors=1';return;
-  }
-  denied();
-}
-document.getElementById('shot').addEventListener('click',takeShot);
-/* снимок с телефона / из галереи: дата и время берутся из самого файла */
+/* YouTube не разрешает сохранять кадры трансляции в стороннем приложении, поэтому снимки добавляет сам пользователь: скриншот из галереи */
+/* скриншот из галереи: дата и время берутся из самого файла */
 var gal=document.getElementById('gal');
 gal.addEventListener('change',function(){
   var fs=[].slice.call(gal.files||[]);gal.value='';
@@ -628,8 +615,8 @@ function renderLib(){
       r.onkeydown=function(ev){if(ev.key==='Enter')r.onclick()};
       box.appendChild(r)});
   }else{
-    var add=document.createElement('button');add.className='btn addb';add.textContent='＋ Добавить снимок из галереи';add.onclick=function(){gal.click()};box.appendChild(add);
-    if(!SHOTS.length){var em=document.createElement('div');em.className='empty';em.innerHTML='Здесь будут ваши снимки с камер.<br>Нажмите «📷 Снимок» в окне камеры или добавьте скриншот из галереи.';box.appendChild(em);return}
+    var add=document.createElement('button');add.className='btn addb';add.textContent='＋ Загрузить скриншот';add.onclick=function(){gal.click()};box.appendChild(add);
+    if(!SHOTS.length){var em=document.createElement('div');em.className='empty';em.innerHTML='Здесь будут ваши встречи и впечатления.<br>Сделайте скриншот на телефоне и загрузите его кнопкой выше. Дата и время подставятся из файла.';box.appendChild(em);return}
     SHOTS.forEach(function(sh){
       var c=document.createElement('div');c.className='shot';
       c.innerHTML='<img alt=""><div class="cap"><span></span><button aria-label="Открыть">'+EXPI+'</button></div>';
@@ -650,6 +637,17 @@ document.getElementById('goFav').onclick=function(){openLib('fav')};
 document.getElementById('goShots').onclick=function(){openLib('shots')};
 
 renderFavs();
+
+/* названия стихий — одного размера; размер подбирается так, чтобы «Северное сияние» занимало всю ширину карточки */
+function fitNames(){
+  var a=document.querySelector('.c-aurora b');if(!a)return;
+  var root=document.documentElement;root.style.setProperty('--nm','100px');
+  var card=a.parentElement,cs=getComputedStyle(card),w=card.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  var need=a.scrollWidth||a.getBoundingClientRect().width;
+  root.style.setProperty('--nm',Math.max(14,Math.min(30,Math.floor(100*w/need*10)/10))+'px');
+}
+fitNames();window.addEventListener('resize',fitNames);window.addEventListener('load',fitNames);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitNames);
 /* ---------- на весь экран / без интерфейса ---------- */
 function setImm(on){
   view.classList.toggle('imm',!!on);
